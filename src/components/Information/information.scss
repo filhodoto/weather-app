@@ -1,0 +1,12 @@
+.information {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid cornflowerblue;
+
+  * {
+    border: 1px solid red;
+  }
+}
