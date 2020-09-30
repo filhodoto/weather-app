@@ -1,0 +1,28 @@
+@import 'styles/ui.scss';
+
+.information {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid cornflowerblue;
+
+  &__timezone {
+    @include heading;
+    font-size: x-large;
+  }
+
+  &__icon {
+    padding: 10px 0 20px;
+  }
+
+  &__temperature {
+    @include heading;
+    font-size: xx-large;
+  }
+
+  * {
+    border: 1px solid red;
+  }
+}

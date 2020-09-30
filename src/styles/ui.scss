@@ -1,0 +1,33 @@
+@import url('https://fonts.googleapis.com/css2?family=Abel&family=Nunito:wght@300;400;700&display=swap');
+
+// CSS variables
+:root {
+  // Colors
+  --bgGradient: linear-gradient(
+    to bottom,
+    #9dddf6,
+    #89d4f4,
+    #74cbf2,
+    #5dc1f0,
+    #43b8ef,
+    #35b1ea,
+    #24aae4,
+    #03a3df,
+    #079dd5,
+    #0b96cb,
+    #0f90c2,
+    #128ab8
+  );
+
+  --fontColor: white;
+
+  // Font
+  --bodyFont: 'Abel', sans-serif;
+  --headingFont: 'Nunito', sans-serif;
+}
+
+// SASS Mixins
+@mixin heading($weight: 700) {
+  font-family: var(--headingFont);
+  font-weight: $weight;
+}

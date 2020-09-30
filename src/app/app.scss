@@ -1,3 +1,5 @@
+@import 'styles/ui.scss';
+
 .app {
   text-align: center;
   display: flex;
@@ -6,6 +8,9 @@
   flex-direction: column;
   height: 100vh;
   border: 1px solid coral;
+  color: var(--fontColor);
+  background-image: var(--bgGradient);
+  font-family: var(--bodyFont);
 
   * {
     box-sizing: border-box;
@@ -14,12 +19,5 @@
   & > * {
     width: 100%;
     padding: 10px;
-  }
-
-  .footer {
-    display: flex;
-    align-items: center;
-    height: 50px;
-    border: 1px solid goldenrod;
   }
 }
