@@ -1,4 +1,9 @@
 import { ILocationCoordenates } from 'helpers/location';
+import {
+  FETCH_WEATHER_SUCCESS,
+  SET_LOADING,
+  SET_LOCATION,
+} from 'state/actions/appActions';
 
 export interface IWeatherState {
   timezone: any;
@@ -31,21 +36,20 @@ export const appState: IAppState = {
 };
 
 export const appReducer = (state: IAppState, action: any): any => {
-  console.log(action);
   switch (action.type) {
-    case 'SET_LOADING':
+    case SET_LOADING:
       return {
         ...state,
         loading: action.payload,
       };
 
-    case 'SET_LOCATION':
+    case SET_LOCATION:
       return {
         ...state,
         location: action.payload,
       };
 
-    case 'FETCH_WEATHER_SUCCESS':
+    case FETCH_WEATHER_SUCCESS:
       const data = action.payload;
       return {
         ...state,

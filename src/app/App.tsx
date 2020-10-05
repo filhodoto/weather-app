@@ -13,6 +13,11 @@ import Weather from 'components/Weather/Weather';
 import { appReducer, IAppState, appState } from 'state/reducers/appReducer';
 import { fetchWeather } from 'api/weather';
 import { getCurrentLatLong, ILocationCoordenates } from 'helpers/location';
+import {
+  fetchWeaterSucess,
+  setLoading,
+  setLocation,
+} from 'state/actions/appActions';
 
 // Define store context
 export const StoreContext = createContext<{
@@ -29,26 +34,20 @@ const App: FC = (): JSX.Element => {
   // Update the location in store
   async function updateLocationInStore() {
     const position: ILocationCoordenates = await getCurrentLatLong();
-    dispatch({
-      type: 'SET_LOCATION',
-      payload: {
+    setLocation(
+      {
         lat: position.lat,
         long: position.long,
       },
-    });
+      dispatch
+    );
   }
 
   // Update weather details in store and remove loading
   const updateWeatherInStore = async () => {
     const data = await fetchWeather(state.location);
-    dispatch({
-      type: 'FETCH_WEATHER_SUCCESS',
-      payload: data,
-    });
-    dispatch({
-      type: 'SET_LOADING',
-      payload: false,
-    });
+    fetchWeaterSucess(data, dispatch);
+    setLoading(false, dispatch);
   };
 
   // Update location data when app first renders

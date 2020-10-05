@@ -23,8 +23,6 @@ const setFetchUrl = (location: ILocationCoordenates | string) => {
   if (typeof location === 'string') {
     return `${BASE_URL}weather?q=${location}&appid=${APIKey}`;
   } else {
-    // TODO:: Remove default lat and long and use information sent by props
-    console.log('setFetchUrl ', location);
     return `${BASE_URL}weather?lat=${location.lat}&lon=${location.long}&appid=${APIKey}`;
   }
 };

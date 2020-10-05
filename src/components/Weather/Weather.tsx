@@ -1,15 +1,10 @@
-import React, { ChangeEvent, FC, useContext, useEffect } from 'react';
-import { StoreContext } from 'app/App';
+import React, { ChangeEvent, FC, useContext, useEffect, useState } from 'react';
 import './weather.scss';
-import { fetchWeather } from 'api/weather';
+import { StoreContext } from 'app/App';
 
 const Weather: FC = (): JSX.Element => {
   const { state, dispatch } = useContext(StoreContext)!;
   const { timezone, location, icon, temperature, feedback } = state.weather;
-
-  const handleSearchChange = (ev: ChangeEvent<HTMLInputElement>) => {
-    console.log(ev.target.value);
-  };
 
   return (
     <main className="information">
@@ -18,7 +13,6 @@ const Weather: FC = (): JSX.Element => {
       <div className="information__icon">{icon}</div>
       <div className="information__temperature">{temperature}</div>
       <div className="information__feedback">{feedback}</div>
-      <input type="text" value="Type Location" onChange={handleSearchChange} />
     </main>
   );
 };
