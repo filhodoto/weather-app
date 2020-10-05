@@ -1,18 +1,10 @@
-import React, { FC, Reducer, useReducer } from 'react';
-import {
-  IWeatherState,
-  weatherReducer,
-  weatherInitialState,
-} from 'state/reducers/weatherReducer';
+import React, { ChangeEvent, FC, useContext, useEffect, useState } from 'react';
 import './weather.scss';
+import { StoreContext } from 'app/App';
 
 const Weather: FC = (): JSX.Element => {
-  const [state] = useReducer<Reducer<IWeatherState, {}>>(
-    weatherReducer,
-    weatherInitialState
-  );
-
-  const { timezone, location, icon, temperature, feedback } = state;
+  const { state, dispatch } = useContext(StoreContext)!;
+  const { timezone, location, icon, temperature, feedback } = state.weather;
 
   return (
     <main className="information">
