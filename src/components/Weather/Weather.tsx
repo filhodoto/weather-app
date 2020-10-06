@@ -1,16 +1,17 @@
-import React, { ChangeEvent, FC, useContext, useEffect, useState } from 'react';
+import React, { FC, useContext } from 'react';
 import './weather.scss';
 import { StoreContext } from 'app/App';
+import WeatherIcon from 'components/ui/WeatherIcon/WeatherIcon';
 
 const Weather: FC = (): JSX.Element => {
-  const { state, dispatch } = useContext(StoreContext)!;
-  const { timezone, location, icon, temperature, feedback } = state.weather;
+  const { state } = useContext(StoreContext)!;
+  const { timezone, place, id, temperature, feedback } = state.weather;
 
   return (
     <main className="information">
       <div className="information__timezone">{timezone}</div>
-      <div className="information__location">{location}</div>
-      <div className="information__icon">{icon}</div>
+      <div className="information__place">{place}</div>
+      <WeatherIcon className="information__icon" id={id} />
       <div className="information__temperature">{temperature}</div>
       <div className="information__feedback">{feedback}</div>
     </main>
