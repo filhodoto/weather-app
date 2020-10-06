@@ -7,20 +7,20 @@ import {
 
 export interface IWeatherState {
   timezone: any;
-  location: string;
+  place: string;
   temperature: number;
-  icon: any;
+  feelsLike: number;
+  id: number | null;
   feedback: string;
-  loading: boolean;
 }
 
 const weatherState: IWeatherState = {
   timezone: '',
-  location: '',
+  place: '',
   temperature: 0,
-  icon: null,
+  feelsLike: 0,
+  id: null,
   feedback: '',
-  loading: true,
 };
 
 export interface IAppState {
@@ -46,7 +46,7 @@ export const appReducer = (state: IAppState, action: any): any => {
     case SET_LOCATION:
       return {
         ...state,
-        location: action.payload,
+        locale: action.payload,
       };
 
     case FETCH_WEATHER_SUCCESS:
@@ -55,10 +55,11 @@ export const appReducer = (state: IAppState, action: any): any => {
         ...state,
         weather: {
           timezone: data.timezone,
-          location: data.name,
-          icon: data.weather[0].icon,
+          place: data.name,
+          id: data.weather[0].id,
           temperature: data.main.temp,
-          feedback: data.main.temp,
+          feelsLike: data.main.feels_like,
+          feedback: data.weather[0].description,
         },
       };
 
