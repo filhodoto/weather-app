@@ -46,7 +46,7 @@ export const appReducer = (state: IAppState, action: any): any => {
     case SET_LOCATION:
       return {
         ...state,
-        locale: action.payload,
+        location: action.payload,
       };
 
     case FETCH_WEATHER_SUCCESS:
