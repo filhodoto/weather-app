@@ -15,6 +15,7 @@ import { fetchWeather } from 'api/weather';
 import { getCurrentLatLong, ILocationCoordenates } from 'helpers/location';
 import {
   fetchWeaterSucess,
+  fetchWeaterFailed,
   setLoading,
   setLocation,
 } from 'state/actions/appActions';
@@ -46,7 +47,13 @@ const App: FC = (): JSX.Element => {
   // Update weather details in store and remove loading
   const updateWeatherInStore = async () => {
     const data = await fetchWeather(state.location);
-    fetchWeaterSucess(data, dispatch);
+    // Handle API response
+    // If data returns a code that it's not 200 it means it had an error
+    data.cod !== 200
+      ? fetchWeaterFailed(data.message, dispatch)
+      : fetchWeaterSucess(data, dispatch);
+
+    // Remove Loading
     setLoading(false, dispatch);
   };
 
@@ -70,7 +77,13 @@ const App: FC = (): JSX.Element => {
     <div className="app">
       <StoreContext.Provider value={{ state, dispatch }}>
         <Header />
-        {state.loading ? <div>Loading...</div> : <Weather />}
+        {state.loading ? (
+          <div>Loading...</div>
+        ) : state.errorMsg ? (
+          <div className="error-msg">{state.errorMsg}</div>
+        ) : (
+          <Weather />
+        )}
         <Footer />
       </StoreContext.Provider>
     </div>

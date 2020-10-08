@@ -1,5 +1,6 @@
 import { ILocationCoordenates } from 'helpers/location';
 import {
+  FETCH_WEATHER_FAILED,
   FETCH_WEATHER_SUCCESS,
   SET_LOADING,
   SET_LOCATION,
@@ -27,12 +28,14 @@ export interface IAppState {
   loading: boolean;
   location: ILocationCoordenates | string;
   weather: IWeatherState;
+  errorMsg: string | null;
 }
 
 export const appState: IAppState = {
   loading: true,
   location: '',
   weather: weatherState,
+  errorMsg: null,
 };
 
 export const appReducer = (state: IAppState, action: any): any => {
@@ -61,6 +64,13 @@ export const appReducer = (state: IAppState, action: any): any => {
           feelsLike: data.main.feels_like,
           feedback: data.weather[0].description,
         },
+        errorMsg: null,
+      };
+
+    case FETCH_WEATHER_FAILED:
+      return {
+        ...state,
+        errorMsg: action.payload,
       };
 
     default:
