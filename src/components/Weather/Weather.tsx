@@ -12,7 +12,7 @@ const Weather: FC = (): JSX.Element => {
       <div className="information__timezone">{timezone}</div>
       <div className="information__place">{place}</div>
       <WeatherIcon className="information__icon" id={id} />
-      <div className="information__temperature">{temperature}</div>
+      <div className="information__temperature">{temperature}º</div>
       <div className="information__feedback">{feedback}</div>
     </main>
   );

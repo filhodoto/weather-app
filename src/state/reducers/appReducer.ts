@@ -1,4 +1,3 @@
-import { ILocationCoordenates } from 'helpers/location';
 import {
   FETCH_WEATHER_FAILED,
   FETCH_WEATHER_SUCCESS,
@@ -14,6 +13,30 @@ export interface IWeatherState {
   id: number | null;
   feedback: string;
 }
+export interface ILocationCoordenates {
+  lat: number;
+  lon: number;
+}
+
+export interface IOneCallResponse {
+  lat: ILocationCoordenates['lat'];
+  lon: ILocationCoordenates['lon'];
+  timezone: string;
+  timezone_offset: number;
+}
+
+export interface IAppState {
+  loading: boolean;
+  location: ILocationCoordenates | string;
+  weather: IWeatherState;
+  errorMsg: string | null;
+  settings: ISettings;
+}
+
+interface ISettings {
+  units: 'metric' | 'imperial';
+  lang: 'en' | 'pt';
+}
 
 const weatherState: IWeatherState = {
   timezone: '',
@@ -24,18 +47,15 @@ const weatherState: IWeatherState = {
   feedback: '',
 };
 
-export interface IAppState {
-  loading: boolean;
-  location: ILocationCoordenates | string;
-  weather: IWeatherState;
-  errorMsg: string | null;
-}
-
 export const appState: IAppState = {
   loading: true,
   location: '',
   weather: weatherState,
   errorMsg: null,
+  settings: {
+    units: 'metric',
+    lang: 'en',
+  },
 };
 
 export const appReducer = (state: IAppState, action: any): any => {
@@ -53,16 +73,18 @@ export const appReducer = (state: IAppState, action: any): any => {
       };
 
     case FETCH_WEATHER_SUCCESS:
-      const data = action.payload;
+      const weatherData = action.payload.response;
+      const oneCallData = action.payload.oneCallResponse;
+
       return {
         ...state,
         weather: {
-          timezone: data.timezone,
-          place: data.name,
-          id: data.weather[0].id,
-          temperature: data.main.temp,
-          feelsLike: data.main.feels_like,
-          feedback: data.weather[0].description,
+          timezone: oneCallData.timezone,
+          place: weatherData.name,
+          id: weatherData.weather[0].id,
+          temperature: weatherData.main.temp,
+          feelsLike: weatherData.main.feels_like,
+          feedback: weatherData.weather[0].description,
         },
         errorMsg: null,
       };

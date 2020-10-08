@@ -10,9 +10,14 @@ import './app.scss';
 import Footer from 'components/Footer/Footer';
 import Header from 'components/Header/Header';
 import Weather from 'components/Weather/Weather';
-import { appReducer, IAppState, appState } from 'state/reducers/appReducer';
+import {
+  appReducer,
+  IAppState,
+  appState,
+  ILocationCoordenates,
+} from 'state/reducers/appReducer';
 import { fetchWeather } from 'api/weather';
-import { getCurrentLatLong, ILocationCoordenates } from 'helpers/location';
+import { getCurrentLatLong } from 'helpers/location';
 import {
   fetchWeaterSucess,
   fetchWeaterFailed,
@@ -38,7 +43,7 @@ const App: FC = (): JSX.Element => {
     setLocation(
       {
         lat: position.lat,
-        long: position.long,
+        lon: position.lon,
       },
       dispatch
     );
@@ -46,12 +51,15 @@ const App: FC = (): JSX.Element => {
 
   // Update weather details in store and remove loading
   const updateWeatherInStore = async () => {
-    const data = await fetchWeather(state.location);
+    const { response, oneCallResponse } = await fetchWeather(
+      state.location,
+      state.settings
+    );
     // Handle API response
     // If data returns a code that it's not 200 it means it had an error
-    data.cod !== 200
-      ? fetchWeaterFailed(data.message, dispatch)
-      : fetchWeaterSucess(data, dispatch);
+    response.cod !== 200
+      ? fetchWeaterFailed(response.message, dispatch)
+      : fetchWeaterSucess({ response, oneCallResponse }, dispatch);
 
     // Remove Loading
     setLoading(false, dispatch);

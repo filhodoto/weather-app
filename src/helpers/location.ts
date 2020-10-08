@@ -1,7 +1,4 @@
-export interface ILocationCoordenates {
-  lat: number;
-  long: number;
-}
+import { ILocationCoordenates } from 'state/reducers/appReducer';
 
 // Handle Error response from navigator.geolocation
 function handleError(err: any) {
@@ -19,7 +16,7 @@ function getGeoPosition() {
 export async function getCurrentLatLong() {
   return await getGeoPosition().then(
     (value: any): ILocationCoordenates => {
-      return { lat: value.coords.latitude, long: value.coords.longitude };
+      return { lat: value.coords.latitude, lon: value.coords.longitude };
     }
   );
 }
