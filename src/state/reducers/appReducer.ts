@@ -18,13 +18,6 @@ export interface ILocationCoordenates {
   lon: number;
 }
 
-export interface IOneCallResponse {
-  lat: ILocationCoordenates['lat'];
-  lon: ILocationCoordenates['lon'];
-  timezone: string;
-  timezone_offset: number;
-}
-
 export interface IAppState {
   loading: boolean;
   location: ILocationCoordenates | string;
@@ -74,12 +67,12 @@ export const appReducer = (state: IAppState, action: any): any => {
 
     case FETCH_WEATHER_SUCCESS:
       const weatherData = action.payload.response;
-      const oneCallData = action.payload.oneCallResponse;
+      const timezone = action.payload.timezone;
 
       return {
         ...state,
         weather: {
-          timezone: oneCallData.timezone,
+          timezone: timezone,
           place: weatherData.name,
           id: weatherData.weather[0].id,
           temperature: weatherData.main.temp,

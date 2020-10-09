@@ -1,5 +1,5 @@
 import { Dispatch } from 'react';
-import { IAppState, IOneCallResponse } from 'state/reducers/appReducer';
+import { IAppState, IWeatherState } from 'state/reducers/appReducer';
 export const SET_LOADING: string = 'SET_LOADING';
 export const SET_LOCATION: string = 'SET_LOCATION';
 export const FETCH_WEATHER_SUCCESS: string = 'FETCH_WEATHER_SUCCESS';
@@ -27,8 +27,8 @@ export const setLoading = (
 
 export const fetchWeaterSucess = (
   payload: {
-    response: IAppState['weather'];
-    oneCallResponse: IOneCallResponse;
+    response: IWeatherState;
+    timezone: IWeatherState['timezone'];
   },
   dispatch: Dispatch<any>
 ) => {

@@ -1,28 +1,48 @@
-import { IAppState, ILocationCoordenates } from 'state/reducers/appReducer';
+import {
+  IAppState,
+  ILocationCoordenates,
+  IWeatherState,
+} from 'state/reducers/appReducer';
 
 const APIKey: string = 'b1ef52becbe7113f7cda50d29fd6ce86';
 const BASE_URL: string = 'https://api.openweathermap.org/data/2.5/weather';
 const BASE_URL_ONE_CALL: string =
   'https://api.openweathermap.org/data/2.5/onecall';
 
+// Cache used so we don't repeat the oneCall API fetch
+const oneCallcache: {
+  [key: string]: string;
+} = {};
+
 export const fetchWeather = async (
   location: IAppState['location'],
   settings: IAppState['settings']
 ) => {
-  const url = await setFetchUrl(location, settings);
-  const response = await fetchCurrentWeatherData(url);
+  const url: string = await setFetchUrl(location, settings);
+  const response: any = await fetchCurrentWeatherData(url);
 
-  // If the first call was successfull we use the oneCall type of API
-  // to get the timezone based on the first api response latitude and longitude
-
-  // TODO:: Find a way to not repeat this call everytime, save the results in an array
-  // or something and check if lat+lon where already fetch, if so the response should be in the array
-  if (response.cod === 200) {
-    const oneCallResponse = await fetchOneCallData(response.coord);
-    return { response, oneCallResponse };
+  // If call fails, return error message
+  if (response.cod !== 200) {
+    return response;
   }
 
-  return { response };
+  // If we already make this call, get value from cache
+  if (oneCallcache[response.name]) {
+    const timezone = oneCallcache[response.name];
+    return { response, timezone };
+  } else {
+    // If it's the first time this place is searched,,
+    // get the timezone response latitude and longitude and oneCall API
+    const {
+      timezone,
+    }: { [key: string]: IWeatherState['timezone'] } = await fetchOneCallData(
+      response.coord
+    );
+
+    // Cache response so we don't have to do this call again
+    oneCallcache[response.name] = timezone;
+    return { response, timezone };
+  }
 };
 
 // Fetch weather information from Current weather data

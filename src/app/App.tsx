@@ -51,15 +51,15 @@ const App: FC = (): JSX.Element => {
 
   // Update weather details in store and remove loading
   const updateWeatherInStore = async () => {
-    const { response, oneCallResponse } = await fetchWeather(
+    const { response, timezone } = await fetchWeather(
       state.location,
       state.settings
     );
     // Handle API response
-    // If data returns a code that it's not 200 it means it had an error
-    response.cod !== 200
-      ? fetchWeaterFailed(response.message, dispatch)
-      : fetchWeaterSucess({ response, oneCallResponse }, dispatch);
+    // If data returns a code 200 and oneCallResponse we fire success, if not we fire fail
+    response.cod === 200 && timezone
+      ? fetchWeaterSucess({ response, timezone }, dispatch)
+      : fetchWeaterFailed(response.message, dispatch);
 
     // Remove Loading
     setLoading(false, dispatch);
