@@ -1,0 +1,17 @@
+.search {
+  &__options {
+    position: absolute;
+    padding: 5px;
+    text-align: left;
+  }
+
+  &__item {
+    padding: 1.5px 0;
+    opacity: 0.8;
+    cursor: pointer;
+    transition: opacity 0.2s;
+    &:hover {
+      opacity: 1;
+    }
+  }
+}
