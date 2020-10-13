@@ -15,26 +15,31 @@ const Search: FC = (): JSX.Element => {
   const [locationOptions, setlocationOptions] = useState<string[]>([]);
 
   const populateLocationOptions = async (searchQuery: string) => {
-    const options: any = await fetchCities(searchQuery, state['settings']['lang']);
+    // Get cities from API
+    const options: string[] = await fetchCities(
+      searchQuery,
+      state['settings']['lang']
+    );
+    // Set options in state
     setlocationOptions(options);
-  }
+  };
 
   const handleSearchChange = (ev: ChangeEvent<HTMLInputElement>) => {
     ev.preventDefault();
     // If search input is not empty
     if (ev.target.value.trim() !== '') {
-      populateLocationOptions(ev.target.value);
+      populateLocationOptions(ev.target.value.toLowerCase());
     }
 
     // If search input is empty, clean state
-    if(ev.target.value.trim() === '') cleanState();
+    if (ev.target.value.trim() === '') cleanState();
 
     // Set search value
     setSearchValue(ev.target.value);
   };
 
   const handleOptionClick = (city: string) => {
-    // Clean state 
+    // Clean state
     cleanState();
 
     // Set app location
@@ -44,48 +49,65 @@ const Search: FC = (): JSX.Element => {
   const handleLocationClick = async () => {
     // Set app location
     await updateLocationInStore(dispatch);
-    
-    // Clean state 
+
+    // Clean state
     cleanState();
   };
 
   const cleanState = () => {
     // Clean options
     setlocationOptions([]);
-    
+
     // Clean search input value
     setSearchValue('');
-  }
-
+  };
 
   const handleKeyDown = async (ev: React.KeyboardEvent<HTMLInputElement>) => {
     if (ev.key === 'Enter' && searchValue.trim() !== '') {
-      await setLocation(searchValue, dispatch);   
-      
-      // Clean state 
+      await setLocation(searchValue, dispatch);
+
+      // Clean state
       cleanState();
     }
   };
 
   return (
-    <div className={`search search--${locationOptions.length > 0 ? 'open':'closed'}`} >
+    <div
+      className={`search search--${
+        locationOptions.length > 0 ? 'open' : 'closed'
+      }`}
+    >
       <div className="search__input-wrapper">
-        <DebounceInput 
+        <DebounceInput
           className="search__input"
           debounceTimeout={200}
-          type="text" 
+          type="text"
           placeholder="Search for location"
           value={searchValue}
-          onChange={ev => handleSearchChange(ev)}
-          onKeyDown={ev => handleKeyDown(ev)}/>
-        <LocationIconSvg className="search__location-icon" onClick={handleLocationClick}/>
+          onChange={(ev) => handleSearchChange(ev)}
+          onKeyDown={(ev) => handleKeyDown(ev)}
+        />
+        <LocationIconSvg
+          className="search__location-icon"
+          onClick={handleLocationClick}
+        />
       </div>
-      <ul className="search__options-wrapper">{locationOptions.map((item:string, index) => {
-        // Create a key for items
-        const key = `${spaceToDash(item).toLowerCase()}-${index}`;
+      <ul className="search__options-wrapper">
+        {locationOptions.map((item: string, index) => {
+          // Create a key for items
+          const key = `${spaceToDash(item).toLowerCase()}-${index}`;
 
-        return (<li className="search__option" key={key} onClick={()=>handleOptionClick(item)}>{item}</li>)
-      })}</ul>
+          return (
+            <li
+              className="search__option"
+              key={key}
+              onClick={() => handleOptionClick(item)}
+            >
+              {item}
+            </li>
+          );
+        })}
+      </ul>
     </div>
   );
 };

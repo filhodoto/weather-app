@@ -1,3 +1,4 @@
+import { spaceToDash } from 'helpers/helpers';
 import {
   IAppState,
   ILocationCoordenates,
@@ -9,25 +10,24 @@ const BASE_URL: string = 'https://api.openweathermap.org/data/2.5/weather';
 const BASE_URL_ONE_CALL: string =
   'https://api.openweathermap.org/data/2.5/onecall';
 
-// Cache used so we don't repeat the oneCall API fetch
-const oneCallcache: {
-  [key: string]: string;
-} = {};
-
 export const fetchWeather = async (
   location: IAppState['location'],
   settings: IAppState['settings']
 ) => {
   const url: string = await setFetchUrl(location, settings);
   const response: any = await fetchCurrentWeatherData(url);
-  // If call fails, return error message
+
+  // If call fails, return response with error message
   if (response.cod !== 200) {
     return await { response };
   }
 
+  // Create cache key to use with sessionStorage
+  const cacheKey = `${spaceToDash(response.name).toLowerCase()}-one-call`;
+
   // If we already make this call, get value from cache
-  if (oneCallcache[response.name]) {
-    const timezone = oneCallcache[response.name];
+  if (sessionStorage.getItem(cacheKey)) {
+    const timezone = sessionStorage.getItem(cacheKey);
     return { response, timezone };
   } else {
     // If it's the first time this place is searched,,
@@ -38,8 +38,9 @@ export const fetchWeather = async (
       response.coord
     );
 
-    // Cache response so we don't have to do this call again
-    oneCallcache[response.name] = timezone;
+    // Cache response in sessionStorage so we don't have to do this call again
+    sessionStorage.setItem(cacheKey, timezone);
+
     return { response, timezone };
   }
 };
