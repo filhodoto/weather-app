@@ -1,9 +1,12 @@
 import React, { ChangeEvent, FC, useContext, useState } from 'react';
 import './search.scss';
 import { setLocation } from 'state/actions/appActions';
-import { StoreContext } from 'app/App';
+import { StoreContext, updateLocationInStore } from 'app/App';
 import { fetchCities } from 'api/cities';
 import { DebounceInput } from 'react-debounce-input';
+
+// Import svg elements in a basic way from an image file
+import { ReactComponent as LocationIconSvg } from 'assets/icons/location-icon.svg';
 
 const Search: FC = (): JSX.Element => {
   const { dispatch, state } = useContext(StoreContext)!;
@@ -17,11 +20,16 @@ const Search: FC = (): JSX.Element => {
 
   const handleSearchChange = (ev: ChangeEvent<HTMLInputElement>) => {
     ev.preventDefault();
+    // If search input is not empty
     if (ev.target.value.trim() !== '') {
       populateLocationOptions(ev.target.value);
     }
-    setSearchValue(ev.target.value);
 
+    // If search input is empty, clean state
+    if(ev.target.value.trim() === '') cleanState();
+
+    // Set search value
+    setSearchValue(ev.target.value);
   };
 
   const handleOptionClick = (city: string) => {
@@ -32,18 +40,26 @@ const Search: FC = (): JSX.Element => {
     setLocation(city, dispatch);
   };
 
+  const handleLocationClick = async () => {
+    // Set app location
+    await updateLocationInStore(dispatch);
+    
+    // Clean state 
+    cleanState();
+  };
+
   const cleanState = () => {
     // Clean options
     setlocationOptions([]);
     
     // Clean search input value
     setSearchValue('');
-
   }
+
 
   const handleKeyDown = async (ev: React.KeyboardEvent<HTMLInputElement>) => {
     if (ev.key === 'Enter' && searchValue.trim() !== '') {
-      await setLocation(searchValue, dispatch);
+      await setLocation(searchValue, dispatch);   
       
       // Clean state 
       cleanState();
@@ -51,19 +67,23 @@ const Search: FC = (): JSX.Element => {
   };
 
   return (
-    <div className="search">
-      <DebounceInput 
-      className="search__input"
-      debounceTimeout={100}
-      type="text" 
-      placeholder="Search for location"
-      value={searchValue}
-      onChange={ev => handleSearchChange(ev)}
-      onKeyDown={ev => handleKeyDown(ev)}/>
-      <ul className="search__options">{locationOptions.map((item:string, index) => {
+    <div className={`search search--${locationOptions.length > 0 ? 'open':'closed'}`} >
+      <div className="search__input-wrapper">
+        <DebounceInput 
+          className="search__input"
+          debounceTimeout={200}
+          type="text" 
+          placeholder="Search for location"
+          value={searchValue}
+          onChange={ev => handleSearchChange(ev)}
+          onKeyDown={ev => handleKeyDown(ev)}/>
+        <LocationIconSvg className="search__location-icon" onClick={handleLocationClick}/>
+      </div>
+      <ul className="search__options-wrapper">{locationOptions.map((item:string, index) => {
+        // Create a key for items
         const key = `${item.toLowerCase().replace(' ', '-')}-${index}`;
         console.log(key);
-        return (<li className="search__item" key={key} onClick={()=>handleOptionClick(item)}>{item}</li>)
+        return (<li className="search__option" key={key} onClick={()=>handleOptionClick(item)}>{item}</li>)
       })}</ul>
     </div>
   );
