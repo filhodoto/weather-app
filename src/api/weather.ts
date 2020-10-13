@@ -20,10 +20,9 @@ export const fetchWeather = async (
 ) => {
   const url: string = await setFetchUrl(location, settings);
   const response: any = await fetchCurrentWeatherData(url);
-
   // If call fails, return error message
   if (response.cod !== 200) {
-    return response;
+    return await { response };
   }
 
   // If we already make this call, get value from cache

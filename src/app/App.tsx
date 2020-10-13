@@ -26,7 +26,7 @@ import {
 } from 'state/actions/appActions';
 
 // TODO:: 1 - Create autocomplete input for search
-// TODO:: 2 - Add a "Get my location" button (probably next to search)
+//            - Memoize response to prevent unecessary api calls
 // TODO:: 3 - Style everything with .scss
 // TODO:: 4 - Save scss styling in different branch
 // TODO:: 5 - Refactor all the styling to use Emotion and styled-components
@@ -70,8 +70,7 @@ const App: FC = (): JSX.Element => {
     );
     // Handle API response
     // If data returns a code 200 and oneCallResponse we fire success, if not we fire fail
-    // TODO:: Fix this, we still get "Cannot read property 'cod' of undefined" which means a response with "cod" is not coming
-    response.cod === 200 && timezone
+    await response.cod === 200 && timezone
       ? fetchWeaterSucess({ response, timezone }, dispatch)
       : fetchWeaterFailed(response.message, dispatch);
 

@@ -7,6 +7,7 @@ import { DebounceInput } from 'react-debounce-input';
 
 // Import svg elements in a basic way from an image file
 import { ReactComponent as LocationIconSvg } from 'assets/icons/location-icon.svg';
+import { spaceToDash } from 'helpers/helpers';
 
 const Search: FC = (): JSX.Element => {
   const { dispatch, state } = useContext(StoreContext)!;
@@ -81,8 +82,8 @@ const Search: FC = (): JSX.Element => {
       </div>
       <ul className="search__options-wrapper">{locationOptions.map((item:string, index) => {
         // Create a key for items
-        const key = `${item.toLowerCase().replace(' ', '-')}-${index}`;
-        console.log(key);
+        const key = `${spaceToDash(item).toLowerCase()}-${index}`;
+
         return (<li className="search__option" key={key} onClick={()=>handleOptionClick(item)}>{item}</li>)
       })}</ul>
     </div>
