@@ -1,4 +1,5 @@
 @import 'styles/ui.scss';
+@import 'styles/reset.scss';
 
 .app {
   text-align: center;
@@ -7,7 +8,6 @@
   justify-content: space-between;
   flex-direction: column;
   height: 100vh;
-  border: 1px solid coral;
   color: var(--fontColor);
   background-image: var(--bgGradient);
   font-family: var(--bodyFont);
@@ -19,5 +19,8 @@
   & > * {
     width: 100%;
     padding: 10px;
+  }
+  input:focus {
+    outline: none;
   }
 }

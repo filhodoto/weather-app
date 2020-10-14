@@ -6,7 +6,10 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  border: 1px solid cornflowerblue;
+
+  & > * {
+    padding: 2.5px 0;
+  }
 
   &__place {
     @include heading;
@@ -14,7 +17,7 @@
   }
 
   &__icon {
-    padding: 10px 0 20px;
+    padding: 0 0 20px;
     font-size: 100px;
   }
 

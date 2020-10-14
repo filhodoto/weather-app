@@ -25,11 +25,30 @@ import {
   setLocation,
 } from 'state/actions/appActions';
 
+// TODO:: 1 - Style everything with .scss
+// TODO:: 2 - Save scss styling in different branch
+// TODO:: 3 - Refactor all the styling to use Emotion and styled-components
+// TODO:: 4 - Create Theme change with styled.components
+// TODO:: 5 - Implemente github pages or netlify on project
+// TODO:: 6 - Check how to implement jest testing
+
 // Define store context
 export const StoreContext = createContext<{
   state: IAppState;
   dispatch: Dispatch<any>;
 } | null>(null);
+
+// Update location in store
+export async function updateLocationInStore(dispatch: Dispatch<any>) {
+  const position: ILocationCoordenates = await getCurrentLatLong();
+  setLocation(
+    {
+      lat: position.lat,
+      lon: position.lon,
+    },
+    dispatch
+  );
+}
 
 const App: FC = (): JSX.Element => {
   const [state, dispatch] = useReducer<Reducer<IAppState, any>>(
@@ -38,16 +57,6 @@ const App: FC = (): JSX.Element => {
   );
 
   // Update the location in store
-  async function updateLocationInStore() {
-    const position: ILocationCoordenates = await getCurrentLatLong();
-    setLocation(
-      {
-        lat: position.lat,
-        lon: position.lon,
-      },
-      dispatch
-    );
-  }
 
   // Update weather details in store and remove loading
   const updateWeatherInStore = async () => {
@@ -57,7 +66,7 @@ const App: FC = (): JSX.Element => {
     );
     // Handle API response
     // If data returns a code 200 and oneCallResponse we fire success, if not we fire fail
-    response.cod === 200 && timezone
+    (await response.cod) === 200 && timezone
       ? fetchWeaterSucess({ response, timezone }, dispatch)
       : fetchWeaterFailed(response.message, dispatch);
 
@@ -68,7 +77,7 @@ const App: FC = (): JSX.Element => {
   // Update location data when app first renders
   useEffect(() => {
     if (navigator.geolocation && state.location === '') {
-      updateLocationInStore();
+      updateLocationInStore(dispatch);
     }
   });
 
