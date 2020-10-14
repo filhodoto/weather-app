@@ -96,13 +96,15 @@ const App: FC = (): JSX.Element => {
     <div className="app">
       <StoreContext.Provider value={{ state, dispatch }}>
         <Header />
-        {state.loading ? (
-          <Loading />
-        ) : state.errorMsg ? (
-          <FeedbackMsg className="error" message={state.errorMsg} />
-        ) : (
-          <Weather />
-        )}
+        <main className="main-wrapper">
+          {state.loading ? (
+            <Loading />
+          ) : state.errorMsg ? (
+            <FeedbackMsg className="error" message={state.errorMsg} />
+          ) : (
+            <Weather />
+          )}
+        </main>
         <Footer />
       </StoreContext.Provider>
     </div>

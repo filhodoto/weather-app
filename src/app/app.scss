@@ -2,10 +2,8 @@
 @import 'styles/reset.scss';
 
 .app {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-direction: column;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
   min-height: 100vh;
   text-align: center;
 
@@ -21,6 +19,12 @@
     width: 100%;
     padding: 10px;
   }
+
+  .main-wrapper {
+    place-items: center;
+    display: grid;
+  }
+
   input:focus {
     outline: none;
   }
