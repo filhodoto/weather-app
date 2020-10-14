@@ -7,13 +7,17 @@
   justify-content: center;
   align-items: center;
 
+  & > * {
+    padding: 2.5px 0;
+  }
+
   &__place {
     @include heading;
     font-size: x-large;
   }
 
   &__icon {
-    padding: 10px 0 20px;
+    padding: 0 0 20px;
     font-size: 100px;
   }
 

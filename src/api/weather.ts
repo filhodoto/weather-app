@@ -22,11 +22,14 @@ export const fetchWeather = async (
     return await { response };
   }
 
+  // Check if sessionStorage is available
+  const sessionStorageAvailable = sessionStorage !== null;
+
   // Create cache key to use with sessionStorage
   const cacheKey = `${spaceToDash(response.name).toLowerCase()}-one-call`;
 
   // If we already make this call, get value from cache
-  if (sessionStorage.getItem(cacheKey)) {
+  if (sessionStorageAvailable && cacheKey in sessionStorage) {
     const timezone = sessionStorage.getItem(cacheKey);
     return { response, timezone };
   } else {
@@ -39,7 +42,7 @@ export const fetchWeather = async (
     );
 
     // Cache response in sessionStorage so we don't have to do this call again
-    sessionStorage.setItem(cacheKey, timezone);
+    sessionStorageAvailable && sessionStorage.setItem(cacheKey, timezone);
 
     return { response, timezone };
   }

@@ -5,11 +5,14 @@ export const fetchCities = async (
   search: string,
   lang: IAppState['settings']['lang']
 ) => {
+  // Check if sessionStorage is available
+  const sessionStorageAvailable = sessionStorage !== null;
+
   // Create cache key to use with sessionStorage
   const cacheKey = `${spaceToDash(search).toLowerCase()}-cities`;
 
   // If we already searched this query with API
-  if (sessionStorage.getItem(cacheKey)) {
+  if (sessionStorageAvailable && cacheKey in sessionStorage) {
     // Return cached response in sessionStorage
     // sessionStorage only stores strings, so to store and retriev Arrays
     // we need to JSON.parse the value when we restore it and stringify when we save it
@@ -41,7 +44,8 @@ export const fetchCities = async (
     []);
 
     // Save values on sessionStorage
-    sessionStorage.setItem(cacheKey, JSON.stringify(result));
+    sessionStorageAvailable &&
+      sessionStorage.setItem(cacheKey, JSON.stringify(result));
 
     return result;
   }
