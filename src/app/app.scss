@@ -2,12 +2,13 @@
 @import 'styles/reset.scss';
 
 .app {
-  text-align: center;
   display: flex;
   align-items: center;
   justify-content: space-between;
   flex-direction: column;
-  height: 100vh;
+  min-height: 100vh;
+  text-align: center;
+
   color: var(--fontColor);
   background-image: var(--bgGradient);
   font-family: var(--bodyFont);

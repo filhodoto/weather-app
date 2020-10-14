@@ -24,6 +24,8 @@ import {
   setLoading,
   setLocation,
 } from 'state/actions/appActions';
+import Loading from 'components/ui/Loading/Loading';
+import FeedbackMsgMsg from 'components/FeedbackMsgaFeedbackMsgedbackMsg';
 
 // TODO:: 1 - Style everything with .scss
 // TODO:: 2 - Save scss styling in different branch
@@ -76,9 +78,9 @@ const App: FC = (): JSX.Element => {
 
   // Update location data when app first renders
   useEffect(() => {
-    if (navigator.geolocation && state.location === '') {
-      updateLocationInStore(dispatch);
-    }
+    // if (navigator.geolocation && state.location === '') {
+    //   updateLocationInStore(dispatch);
+    // }
   });
 
   // Update weather in store when location changes
@@ -95,9 +97,9 @@ const App: FC = (): JSX.Element => {
       <StoreContext.Provider value={{ state, dispatch }}>
         <Header />
         {state.loading ? (
-          <div>Loading...</div>
+          <Loading />
         ) : state.errorMsg ? (
-          <div className="error-msg">{state.errorMsg}</div>
+          <FeedbackMsgMsg className="error" message={state.errorMsg} />
         ) : (
           <Weather />
         )}
