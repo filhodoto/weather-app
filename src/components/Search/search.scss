@@ -1,20 +1,28 @@
 $base-padding: 0.6rem 1rem;
 $border-radius: 5px;
-.search {
-  position: absolute;
-  top: 10px;
-  right: 10px;
+$parent: '.search';
+
+#{$parent} {
   display: flex;
   flex-direction: column;
   border: none;
   font-size: medium;
+  width: 100%;
+
+  @media screen and (min-width: 480px) {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    min-width: 220px;
+    width: auto;
+  }
 
   * {
     color: var(--secondaryFontColor);
   }
 
   &--open {
-    .search__input-wrapper {
+    #{$parent}__input-wrapper {
       border-bottom-left-radius: 0;
       border-bottom-right-radius: 0;
     }
@@ -25,7 +33,7 @@ $border-radius: 5px;
     align-items: center;
     padding: $base-padding;
     border-radius: $border-radius;
-    min-width: 220px;
+    width: 100%;
     background: var(--fontColor);
   }
 

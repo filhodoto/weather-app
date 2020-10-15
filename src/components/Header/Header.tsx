@@ -5,7 +5,7 @@ import './header.scss';
 const Header = (): JSX.Element => {
   return (
     <header className="header">
-      <div>Weather App</div>
+      <div className="header__logo">Weather App</div>
       <Search />
     </header>
   );
