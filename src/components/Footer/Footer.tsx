@@ -5,7 +5,12 @@ import './footer.scss';
 const Footer = (): JSX.Element => {
   return (
     <footer className="footer">
-      created by Gonçalo Ramalho {getCurrentYear()}
+      created by{' '}
+      <a href="http://goncaloramalho.com" target="blank_">
+        {' '}
+        Gonçalo Ramalho
+      </a>{' '}
+      {getCurrentYear()}
     </footer>
   );
 };

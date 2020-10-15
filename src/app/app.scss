@@ -20,6 +20,11 @@
     padding: 10px;
   }
 
+  a {
+    color: inherit;
+    text-decoration: inherit;
+    display: contents;
+  }
   .main-wrapper {
     place-items: center;
     display: grid;
