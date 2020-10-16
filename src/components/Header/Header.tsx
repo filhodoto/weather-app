@@ -1,13 +1,28 @@
 import Search from 'components/Search/Search';
 import React from 'react';
-import './header.scss';
+import styled from 'styled-components/macro';
+
+const HeaderStyled = styled.header`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 60px;
+`;
+
+const Logo = styled.div`
+  display: none;
+
+  @media screen and (min-width: 480px) {
+    display: block;
+  }
+`;
 
 const Header = (): JSX.Element => {
   return (
-    <header className="header">
-      <div className="header__logo">Weather App</div>
+    <HeaderStyled>
+      <Logo>Weather App</Logo>
       <Search />
-    </header>
+    </HeaderStyled>
   );
 };
 
