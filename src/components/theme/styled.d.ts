@@ -6,6 +6,8 @@ declare module 'react' {
     css?: CSSProp | CSSObject;
   }
 }
+
+// Add style declarartions to styled-components DefaultTheme
 declare module 'styled-components' {
   export interface DefaultTheme {
     colors: {

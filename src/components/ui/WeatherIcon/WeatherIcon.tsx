@@ -1,18 +1,26 @@
 import React, { FC } from 'react';
-import styled from 'styled-components/macro';
-
-import { IWeatherState } from 'state/reducers/appReducer';
+// eslint-disable-next-line
+import { css } from 'styled-components/macro';
 import 'styles/weather-icons.min.css';
 
-export const Icon = styled.i<{ size: string }>`
-  font-size: ${(props) => props.size};
-`;
+import { IWeatherState } from 'state/reducers/appReducer';
 
-const WeatherIcon: FC<{ id: IWeatherState['id']; size: string }> = ({
-  id,
-  size,
-}): JSX.Element => {
-  return <Icon className={`wi wi-owm-${id}`} size={size} />;
+const WeatherIcon: FC<{
+  id: IWeatherState['id'];
+  size: string;
+  padding?: string;
+}> = ({ id, size, padding }): JSX.Element => {
+  return (
+    <i
+      className={`wi wi-owm-${id}`}
+      css={`
+        font-size: ${size};
+        padding: ${padding
+          ? `${padding} !important`
+          : '50px 0 20px !important'};
+      `}
+    />
+  );
 };
 
 export default WeatherIcon;
