@@ -1,4 +1,5 @@
 import Search from 'components/Search/Search';
+import ToggleSwitch from 'components/ui/ToggleSwitch';
 import React from 'react';
 import styled from 'styled-components/macro';
 
@@ -21,7 +22,11 @@ const Header = (): JSX.Element => {
   return (
     <HeaderStyled>
       <Logo>Weather App</Logo>
-      <Search />
+      <ToggleSwitch />
+      {/* TODO:: Organize HTML and CSS better to align toggle with search, this is an hotfix */}
+      <div>
+        <Search />
+      </div>
     </HeaderStyled>
   );
 };

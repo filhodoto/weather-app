@@ -21,8 +21,8 @@ export interface BaseTheme {
   };
 }
 
-// Add style declarartions to 'styled-components' DefaultTheme
-declare module 'styled-components' {
+// Add style declarartions to 'styled-components/macro' DefaultTheme
+declare module 'styled-components/macro' {
   export interface DefaultTheme {
     colors: {
       bgGradient: string;

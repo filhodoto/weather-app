@@ -8,7 +8,7 @@ import React, {
 } from 'react';
 import styled, { ThemeProvider } from 'styled-components';
 import GlobalStyles from 'components/theme/globalStyles';
-import { theme } from 'components/theme/theme';
+import { themeController } from 'components/theme/theme';
 
 import Footer from 'components/Footer/Footer';
 import Header from 'components/Header/Header';
@@ -111,9 +111,9 @@ const App: FC = (): JSX.Element => {
 
   // Update location data when app first renders
   useEffect(() => {
-    // if (navigator.geolocation && state.location === '') {
-    //   updateLocationInStore(dispatch);
-    // }
+    if (navigator.geolocation && state.location === '') {
+      updateLocationInStore(dispatch);
+    }
   });
 
   // Update weather in store when location changes
@@ -125,8 +125,13 @@ const App: FC = (): JSX.Element => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.location]);
 
+  // Update themeProvicer qwhen we change settings theme
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [state.settings.theme]);
+
   return (
-    <ThemeProvider theme={theme['light']}>
+    <ThemeProvider theme={themeController[`${state.settings.theme}`]}>
       <AppWrapper>
         <StoreContext.Provider value={{ state, dispatch }}>
           <Header />
