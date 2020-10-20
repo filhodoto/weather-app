@@ -30,10 +30,9 @@ import {
 import Loading from 'components/ui/Loading/Loading';
 import FeedbackMsg from 'components/ui/FeedbackMsg/FeedbackMsg';
 
-// TODO:: 1 - Refactor all the styling to use Emotion and styled-components
-// TODO:: 2 - Create Theme change with styled.components
-// TODO:: 3 - Implemente github pages or netlify on project
-// TODO:: 4 - Check how to implement jest testing
+// TODO:: 1 - Create Theme change with styled.components
+// TODO:: 2 - Implemente github pages or netlify on project
+// TODO:: 3 - Check how to implement jest testing
 
 // Define store context
 export const StoreContext = createContext<{
@@ -59,7 +58,7 @@ const AppWrapper = styled.div`
   min-height: 100vh;
   text-align: center;
 
-  color: ${(props) => props.theme.colors.primaryColor};
+  color: ${(props) => props.theme.colors.primary};
   background-image: ${(props) => props.theme.colors.bgGradient};
   font-family: ${(props) => props.theme.fonts.bodyFont}, 'sans-serif';
 
@@ -112,9 +111,9 @@ const App: FC = (): JSX.Element => {
 
   // Update location data when app first renders
   useEffect(() => {
-    if (navigator.geolocation && state.location === '') {
-      updateLocationInStore(dispatch);
-    }
+    // if (navigator.geolocation && state.location === '') {
+    //   updateLocationInStore(dispatch);
+    // }
   });
 
   // Update weather in store when location changes
@@ -135,7 +134,7 @@ const App: FC = (): JSX.Element => {
             {state.loading ? (
               <Loading />
             ) : state.errorMsg ? (
-              <FeedbackMsg className="error" message={state.errorMsg} />
+              <FeedbackMsg type="error" message={state.errorMsg} />
             ) : (
               <Weather />
             )}

@@ -28,7 +28,7 @@ const SearchWrapper = styled.div`
   }
 
   * {
-    color: ${(props) => props.theme.colors.secondaryColor};
+    color: ${(props) => props.theme.colors.secondary};
   }
 
   /* locationOptions.length > 0 */
@@ -40,7 +40,7 @@ const SearchInputWrapper = styled.div<{ open: boolean }>`
   padding: ${basePadding};
   border-radius: ${borderRadius};
   width: 100%;
-  background: ${(props) => props.theme.colors.primaryColor};
+  background: ${(props) => props.theme.colors.primary};
 
   ${(props) =>
     props.open &&
@@ -59,8 +59,8 @@ const Input = styled(DebounceInput)`
   font-size: medium;
 
   &::placeholder {
-    opacity: 0.8;
-    color: ${(props) => props.theme.colors.secondaryColor};
+    opacity: 0.6;
+    color: ${(props) => props.theme.colors.secondary};
   }
 `;
 
@@ -69,12 +69,12 @@ const LocationOption = styled.li`
   cursor: pointer;
   text-decoration: none;
   display: block;
-  background-color: ${(props) => props.theme.colors.primaryColor};
-  border-bottom: 1px ${(props) => props.theme.colors.secondaryColor} solid;
+  background-color: ${(props) => props.theme.colors.primary};
+  border-bottom: 1px ${(props) => props.theme.colors.secondary} solid;
   transition: all 0.2s;
 
   &:first-child {
-    border-top: 1px ${(props) => props.theme.colors.secondaryColor} solid;
+    border-top: 1px ${(props) => props.theme.colors.secondary} solid;
   }
 
   &:last-child {
@@ -85,8 +85,8 @@ const LocationOption = styled.li`
 
   &:hover {
     opacity: 1;
-    color: ${(props) => props.theme.colors.primaryColor};
-    background-color: ${(props) => props.theme.colors.secondaryColor};
+    color: ${(props) => props.theme.colors.primary};
+    background-color: ${(props) => props.theme.colors.secondary};
   }
 `;
 
@@ -169,7 +169,7 @@ const Search: FC = (): JSX.Element => {
           css={`
             cursor: pointer;
             fill: ${({ theme }: { [key: string]: DefaultTheme }) =>
-              theme.colors.secondaryColor};
+              theme.colors.secondary};
           `}
         />
       </SearchInputWrapper>

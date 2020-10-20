@@ -15,9 +15,7 @@ const WeatherIcon: FC<{
       className={`wi wi-owm-${id}`}
       css={`
         font-size: ${size};
-        padding: ${padding
-          ? `${padding} !important`
-          : '50px 0 20px !important'};
+        padding: ${`${padding ? padding : '50px 0 20px'} !important`};
       `}
     />
   );

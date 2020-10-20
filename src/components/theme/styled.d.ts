@@ -6,18 +6,30 @@ declare module 'react' {
     css?: CSSProp | CSSObject;
   }
 }
+// Define BaseTheme interface, we define this in this file instead of adding it to 'styled-components' like DefaultTheme
+export interface BaseTheme {
+  colors: {
+    alerts: {
+      [success: string]: string;
+      [error: string]: string;
+      [warning: string]: string;
+    };
+  };
+  fonts: {
+    bodyFont: string;
+    headingFont: string;
+  };
+}
 
-// Add style declarartions to styled-components DefaultTheme
+// Add style declarartions to 'styled-components' DefaultTheme
 declare module 'styled-components' {
   export interface DefaultTheme {
     colors: {
       bgGradient: string;
-      primaryColor: string;
-      secondaryColor: string;
+      primary: string;
+      secondary: string;
+      alerts: BaseTheme['colors']['alerts'];
     };
-    fonts: {
-      bodyFont: string;
-      headingFont: string;
-    };
+    fonts: BaseTheme['fonts'];
   }
 }
