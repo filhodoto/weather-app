@@ -30,7 +30,8 @@ import {
 import Loading from 'components/ui/Loading/Loading';
 import FeedbackMsg from 'components/ui/FeedbackMsg/FeedbackMsg';
 
-// TODO:: 1 - Create Theme change with styled.components
+// TODO:: 1 - Fix mobile issues. Header and when writing "Caldas"
+// TODO:: 2 - Better way of doing media queries
 // TODO:: 2 - Implemente github pages or netlify on project
 // TODO:: 3 - Check how to implement jest testing
 
@@ -68,7 +69,11 @@ const AppWrapper = styled.div`
 
   & > * {
     width: 100%;
-    padding: 10px;
+    padding: 20px;
+
+    @media screen and (min-width: 480px) {
+      padding: 10px;
+    }
   }
 
   a {
@@ -131,7 +136,7 @@ const App: FC = (): JSX.Element => {
   }, [state.settings.theme]);
 
   return (
-    <ThemeProvider theme={themeController[`${state.settings.theme}`]}>
+    <ThemeProvider theme={themeController[state.settings.theme]!}>
       <AppWrapper>
         <StoreContext.Provider value={{ state, dispatch }}>
           <Header />

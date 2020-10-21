@@ -4,25 +4,24 @@ import { setLocation } from 'state/actions/appActions';
 import { StoreContext, updateLocationInStore } from 'app/App';
 import { fetchCities } from 'api/cities';
 import { DebounceInput } from 'react-debounce-input';
+import sizeMe from 'react-sizeme';
 
 // Import svg elements in a basic way from an image file
 import { ReactComponent as LocationIconSvg } from 'assets/icons/location-icon.svg';
 import { spaceToDash } from 'helpers/helpers';
 
-const basePadding: string = '0.6rem 1rem';
-const borderRadius: string = '5px;';
+const InputPadding: string = '0.6rem 1rem';
+const InputBorderRadius: string = '5px;';
 
 const SearchWrapper = styled.div`
   display: flex;
   flex-direction: column;
+  width: 100%;
+  position: relative;
   border: none;
   font-size: medium;
-  width: 100%;
 
   @media screen and (min-width: 480px) {
-    position: absolute;
-    top: 10px;
-    right: 10px;
     min-width: 220px;
     width: auto;
   }
@@ -30,15 +29,13 @@ const SearchWrapper = styled.div`
   * {
     color: ${(props) => props.theme.colors.secondary};
   }
-
-  /* locationOptions.length > 0 */
 `;
 
 const SearchInputWrapper = styled.div<{ open: boolean }>`
   display: flex;
   align-items: center;
-  padding: ${basePadding};
-  border-radius: ${borderRadius};
+  padding: ${InputPadding};
+  border-radius: ${InputBorderRadius};
   width: 100%;
   background: ${(props) => props.theme.colors.primary};
 
@@ -64,8 +61,15 @@ const Input = styled(DebounceInput)`
   }
 `;
 
+const OptionsContainer = styled.ul<{ marginTop: string }>`
+  text-align: left;
+  position: absolute;
+  width: 100%;
+  top: ${(props) => props.marginTop}; ;
+`;
+
 const LocationOption = styled.li`
-  padding: ${basePadding};
+  padding: ${InputPadding};
   cursor: pointer;
   text-decoration: none;
   display: block;
@@ -78,8 +82,8 @@ const LocationOption = styled.li`
   }
 
   &:last-child {
-    border-bottom-left-radius: ${borderRadius};
-    border-bottom-right-radius: ${borderRadius};
+    border-bottom-left-radius: ${InputBorderRadius};
+    border-bottom-right-radius: ${InputBorderRadius};
     border-bottom: 0;
   }
 
@@ -90,7 +94,14 @@ const LocationOption = styled.li`
   }
 `;
 
-const Search: FC = (): JSX.Element => {
+// TODO:: Maybe create a declaration file for 'react-sizeme' npm package
+interface IReactSizeMe {
+  width: number;
+  height: number;
+  position: number;
+}
+
+const Search: FC<{ size: IReactSizeMe }> = (props): JSX.Element => {
   const { dispatch, state } = useContext(StoreContext)!;
   const [searchValue, setSearchValue] = useState<string>('');
   const [locationOptions, setlocationOptions] = useState<string[]>([]);
@@ -173,7 +184,7 @@ const Search: FC = (): JSX.Element => {
           `}
         />
       </SearchInputWrapper>
-      <ul className="search__options-wrapper" css="text-align: left;">
+      <OptionsContainer marginTop={`${props.size.height}px`}>
         {locationOptions.map((item: string, index) => {
           // Create a key for items
           const key = `${spaceToDash(item).toLowerCase()}-${index}`;
@@ -184,9 +195,9 @@ const Search: FC = (): JSX.Element => {
             </LocationOption>
           );
         })}
-      </ul>
+      </OptionsContainer>
     </SearchWrapper>
   );
 };
 
-export default Search;
+export default sizeMe({ monitorHeight: true })(Search);

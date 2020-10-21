@@ -1,5 +1,6 @@
 import { DefaultTheme } from 'styled-components/macro';
-import { BaseTheme } from './styled';
+import { BaseTheme } from 'components/theme/themes';
+import { ISettings } from 'state/reducers/appReducer';
 
 // Define baseTheme for definitions that will be shared between themes
 export const baseTheme: BaseTheme = {
@@ -60,14 +61,10 @@ export const darkTheme: DefaultTheme = {
 // Use Record so we can use typed maps and prevent error:
 // "An index signature parameter type cannot be a union type. Consider using a mapped object type instead.ts(1337)"
 // http://www.rickcarlino.com/2017/02/27/real-world-use-case-for-typescript-record-types.html
-
-// NOTE:: Using something like below, however didn't manage to remove a typescropt error whene using
-// themeController[`${state.settings.theme}`] instead of themeController['dark']. However because we're typing
-// state.settings.theme with specific strings 'light' | 'dark' we can type the Record here with just "string"
-
-// Example of more specific typing that returned issue - themeController: Partial<Record<ISettings['theme'], DefaultTheme>>;
-
-export const themeController: Record<string, DefaultTheme> = {
+export const themeController: Partial<Record<
+  ISettings['theme'],
+  DefaultTheme
+>> = {
   light: lightTheme,
   dark: darkTheme,
 };

@@ -3,8 +3,9 @@ import styled, { css } from 'styled-components/macro';
 import { StoreContext } from 'app/App';
 import { setTheme } from 'state/actions/appActions';
 import { ISettings } from 'state/reducers/appReducer';
+import WeatherIcon from './WeatherIcon/WeatherIcon';
 
-const Toggle = styled.div<{ styling: string }>`
+const Toggle = styled.div<{ styling: ISettings['theme'] }>`
   --circleSize: 20px;
   --circleMargin: 0.2rem;
   display: flex;
@@ -49,6 +50,11 @@ const Toggle = styled.div<{ styling: string }>`
 const ToggleSwitch: FC = () => {
   const { dispatch, state } = useContext(StoreContext)!;
 
+  const icons: Record<ISettings['theme'], string> = {
+    dark: 'night-clear',
+    light: 'day-sunny',
+  };
+
   const handleToggleClick = () => {
     const theme: ISettings['theme'] =
       state.settings.theme === 'dark' ? 'light' : 'dark';
@@ -56,14 +62,12 @@ const ToggleSwitch: FC = () => {
   };
 
   return (
-    <Toggle styling={`${state.settings.theme}`}>
-      <p
-        css={`
-          margin-right: 15px;
-        `}
-      >
-        {state.settings.theme}
-      </p>
+    <Toggle styling={state.settings.theme}>
+      <WeatherIcon
+        id={icons[state.settings.theme]}
+        size={'1rem'}
+        padding={'0 0.6rem 0 0'}
+      />
       <label onClick={handleToggleClick}>
         <span></span>
       </label>

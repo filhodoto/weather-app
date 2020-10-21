@@ -8,25 +8,40 @@ const HeaderStyled = styled.header`
   align-items: center;
   justify-content: space-between;
   min-height: 60px;
+  flex-flow: column;
+
+  @media screen and (min-width: 480px) {
+    flex-direction: row;
+  }
+`;
+
+const LeftSection = styled.section`
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 1rem;
+
+  @media screen and (min-width: 480px) {
+    width: auto;
+    margin-bottom: 0;
+    min-width: 220px;
+  }
 `;
 
 const Logo = styled.div`
-  display: none;
-
-  @media screen and (min-width: 480px) {
-    display: block;
-  }
+  font-family: ${(props) => props.theme.fonts.headingFont};
 `;
 
 const Header = (): JSX.Element => {
   return (
     <HeaderStyled>
-      <Logo>Weather App</Logo>
-      <ToggleSwitch />
-      {/* TODO:: Organize HTML and CSS better to align toggle with search, this is an hotfix */}
-      <div>
-        <Search />
-      </div>
+      <LeftSection>
+        <Logo>Weather App</Logo>
+        <ToggleSwitch />
+      </LeftSection>
+      <Search />
     </HeaderStyled>
   );
 };
