@@ -25,7 +25,7 @@ export const fetchCities = async (
         body: JSON.stringify({
           query: search,
           aroundLatLngViaIP: false,
-          hitsPerPage: 5,
+          hitsPerPage: 8,
           type: 'city',
           language: lang,
         }),
@@ -39,7 +39,10 @@ export const fetchCities = async (
     ) {
       // For each location in res.hits return the previous
       // array values + the new location value
-      return [...previousArrayState, location.locale_names[0]];
+      // Check for nulls because somehow we've seen arrays of null values
+      return location.locale_names[0] === null
+        ? [...previousArrayState]
+        : [...previousArrayState, location.locale_names[0]];
     },
     []);
 

@@ -170,6 +170,7 @@ const Search: FC<{ size: IReactSizeMe }> = (props): JSX.Element => {
           type="text"
           placeholder="Search for location"
           value={searchValue}
+          debounceTimeout={800}
           onChange={(ev: ChangeEvent): void => handleSearchChange(ev)}
           onKeyDown={(
             ev: React.KeyboardEvent<HTMLInputElement>
@@ -188,7 +189,6 @@ const Search: FC<{ size: IReactSizeMe }> = (props): JSX.Element => {
         {locationOptions.map((item: string, index) => {
           // Create a key for items
           const key = `${spaceToDash(item).toLowerCase()}-${index}`;
-
           return (
             <LocationOption key={key} onClick={() => handleOptionClick(item)}>
               {item}
