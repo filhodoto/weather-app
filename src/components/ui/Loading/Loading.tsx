@@ -1,11 +1,7 @@
 import React, { FC } from 'react';
 
-const Loading: FC<{ className?: string }> = (props) => {
-  return (
-    <div className={`${props.className ? props.className : ''} loading`}>
-      Loading...
-    </div>
-  );
+const Loading: FC = () => {
+  return <div>Loading...</div>;
 };
 
 export default Loading;

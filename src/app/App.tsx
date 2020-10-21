@@ -6,7 +6,10 @@ import React, {
   createContext,
   Dispatch,
 } from 'react';
-import './app.scss';
+import styled, { ThemeProvider } from 'styled-components';
+import GlobalStyles from 'components/theme/globalStyles';
+import { themeController } from 'components/theme/theme';
+
 import Footer from 'components/Footer/Footer';
 import Header from 'components/Header/Header';
 import Weather from 'components/Weather/Weather';
@@ -27,12 +30,10 @@ import {
 import Loading from 'components/ui/Loading/Loading';
 import FeedbackMsg from 'components/ui/FeedbackMsg/FeedbackMsg';
 
-// TODO:: 1 - Style everything with .scss
-// TODO:: 2 - Save scss styling in different branch
-// TODO:: 3 - Refactor all the styling to use Emotion and styled-components
-// TODO:: 4 - Create Theme change with styled.components
-// TODO:: 5 - Implemente github pages or netlify on project
-// TODO:: 6 - Check how to implement jest testing
+// TODO:: 1 - Fix mobile issues. Header and when writing "Caldas"
+// TODO:: 2 - Better way of doing media queries
+// TODO:: 2 - Implemente github pages or netlify on project
+// TODO:: 3 - Check how to implement jest testing
 
 // Define store context
 export const StoreContext = createContext<{
@@ -52,13 +53,50 @@ export async function updateLocationInStore(dispatch: Dispatch<any>) {
   );
 }
 
+const AppWrapper = styled.div`
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  min-height: 100vh;
+  text-align: center;
+
+  color: ${(props) => props.theme.colors.primary};
+  background-image: ${(props) => props.theme.colors.bgGradient};
+  font-family: ${(props) => props.theme.fonts.bodyFont}, 'sans-serif';
+
+  * {
+    box-sizing: border-box;
+  }
+
+  & > * {
+    width: 100%;
+    padding: 20px;
+
+    @media screen and (min-width: 480px) {
+      padding: 10px;
+    }
+  }
+
+  a {
+    color: inherit;
+    text-decoration: inherit;
+    display: contents;
+  }
+
+  input:focus {
+    outline: none;
+  }
+`;
+
+const MainWrapper = styled.main`
+  place-items: center;
+  display: grid;
+`;
+
 const App: FC = (): JSX.Element => {
   const [state, dispatch] = useReducer<Reducer<IAppState, any>>(
     appReducer,
     appState
   );
-
-  // Update the location in store
 
   // Update weather details in store and remove loading
   const updateWeatherInStore = async () => {
@@ -92,22 +130,30 @@ const App: FC = (): JSX.Element => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.location]);
 
+  // Update themeProvicer qwhen we change settings theme
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [state.settings.theme]);
+
   return (
-    <div className="app">
-      <StoreContext.Provider value={{ state, dispatch }}>
-        <Header />
-        <main className="main-wrapper">
-          {state.loading ? (
-            <Loading />
-          ) : state.errorMsg ? (
-            <FeedbackMsg className="error" message={state.errorMsg} />
-          ) : (
-            <Weather />
-          )}
-        </main>
-        <Footer />
-      </StoreContext.Provider>
-    </div>
+    <ThemeProvider theme={themeController[state.settings.theme]!}>
+      <AppWrapper>
+        <StoreContext.Provider value={{ state, dispatch }}>
+          <Header />
+          <MainWrapper>
+            {state.loading ? (
+              <Loading />
+            ) : state.errorMsg ? (
+              <FeedbackMsg type="error" message={state.errorMsg} />
+            ) : (
+              <Weather />
+            )}
+          </MainWrapper>
+          <Footer />
+        </StoreContext.Provider>
+      </AppWrapper>
+      <GlobalStyles />
+    </ThemeProvider>
   );
 };
 

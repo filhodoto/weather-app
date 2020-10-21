@@ -1,17 +1,25 @@
 import { getCurrentYear } from 'helpers/helpers';
 import React from 'react';
-import './footer.scss';
+import styled from 'styled-components/macro';
+
+const FooterStyled = styled.footer`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: small;
+  height: 50px;
+`;
 
 const Footer = (): JSX.Element => {
   return (
-    <footer className="footer">
+    <FooterStyled>
       created by{' '}
       <a href="http://goncaloramalho.com" target="blank_">
         {' '}
         Gonçalo Ramalho
       </a>{' '}
       {getCurrentYear()}
-    </footer>
+    </FooterStyled>
   );
 };
 

@@ -1,7 +1,8 @@
 import { Dispatch } from 'react';
-import { IAppState, IWeatherState } from 'state/reducers/appReducer';
+import { IAppState, ISettings, IWeatherState } from 'state/reducers/appReducer';
 export const SET_LOADING: string = 'SET_LOADING';
 export const SET_LOCATION: string = 'SET_LOCATION';
+export const SET_THEME: string = 'SET_THEME';
 export const FETCH_WEATHER_SUCCESS: string = 'FETCH_WEATHER_SUCCESS';
 export const FETCH_WEATHER_FAILED: string = 'FETCH_WEATHER_FAILED';
 
@@ -44,6 +45,16 @@ export const fetchWeaterFailed = (
 ) => {
   dispatch({
     type: FETCH_WEATHER_FAILED,
+    payload: payload,
+  });
+};
+
+export const setTheme = (
+  payload: ISettings['theme'],
+  dispatch: Dispatch<any>
+) => {
+  dispatch({
+    type: SET_THEME,
     payload: payload,
   });
 };

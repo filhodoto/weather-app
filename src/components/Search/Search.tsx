@@ -1,15 +1,107 @@
 import React, { ChangeEvent, FC, useContext, useState } from 'react';
-import './search.scss';
+import styled, { DefaultTheme, css } from 'styled-components/macro';
 import { setLocation } from 'state/actions/appActions';
 import { StoreContext, updateLocationInStore } from 'app/App';
 import { fetchCities } from 'api/cities';
 import { DebounceInput } from 'react-debounce-input';
+import sizeMe from 'react-sizeme';
 
 // Import svg elements in a basic way from an image file
 import { ReactComponent as LocationIconSvg } from 'assets/icons/location-icon.svg';
 import { spaceToDash } from 'helpers/helpers';
 
-const Search: FC = (): JSX.Element => {
+const InputPadding: string = '0.6rem 1rem';
+const InputBorderRadius: string = '5px;';
+
+const SearchWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  position: relative;
+  border: none;
+  font-size: medium;
+
+  @media screen and (min-width: 480px) {
+    min-width: 220px;
+    width: auto;
+  }
+
+  * {
+    color: ${(props) => props.theme.colors.secondary};
+  }
+`;
+
+const SearchInputWrapper = styled.div<{ open: boolean }>`
+  display: flex;
+  align-items: center;
+  padding: ${InputPadding};
+  border-radius: ${InputBorderRadius};
+  width: 100%;
+  background: ${(props) => props.theme.colors.primary};
+
+  ${(props) =>
+    props.open &&
+    css`
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+    `}
+`;
+
+const Input = styled(DebounceInput)`
+  flex: 1;
+  padding-right: 10px;
+  border: none;
+  background: none;
+  font-family: ${(props) => props.theme.fonts.bodyFont};
+  font-size: medium;
+
+  &::placeholder {
+    opacity: 0.6;
+    color: ${(props) => props.theme.colors.secondary};
+  }
+`;
+
+const OptionsContainer = styled.ul<{ marginTop: string }>`
+  text-align: left;
+  position: absolute;
+  width: 100%;
+  top: ${(props) => props.marginTop}; ;
+`;
+
+const LocationOption = styled.li`
+  padding: ${InputPadding};
+  cursor: pointer;
+  text-decoration: none;
+  display: block;
+  background-color: ${(props) => props.theme.colors.primary};
+  border-bottom: 1px ${(props) => props.theme.colors.secondary} solid;
+  transition: all 0.2s;
+
+  &:first-child {
+    border-top: 1px ${(props) => props.theme.colors.secondary} solid;
+  }
+
+  &:last-child {
+    border-bottom-left-radius: ${InputBorderRadius};
+    border-bottom-right-radius: ${InputBorderRadius};
+    border-bottom: 0;
+  }
+
+  &:hover {
+    opacity: 1;
+    color: ${(props) => props.theme.colors.primary};
+    background-color: ${(props) => props.theme.colors.secondary};
+  }
+`;
+
+// TODO:: Maybe create a declaration file for 'react-sizeme' npm package
+interface IReactSizeMe {
+  width: number;
+  height: number;
+  position: number;
+}
+
+const Search: FC<{ size: IReactSizeMe }> = (props): JSX.Element => {
   const { dispatch, state } = useContext(StoreContext)!;
   const [searchValue, setSearchValue] = useState<string>('');
   const [locationOptions, setlocationOptions] = useState<string[]>([]);
@@ -24,7 +116,7 @@ const Search: FC = (): JSX.Element => {
     setlocationOptions(options);
   };
 
-  const handleSearchChange = (ev: ChangeEvent<HTMLInputElement>) => {
+  const handleSearchChange = (ev: ChangeEvent<any>) => {
     ev.preventDefault();
     // If search input is not empty
     if (ev.target.value.trim() !== '') {
@@ -72,44 +164,40 @@ const Search: FC = (): JSX.Element => {
   };
 
   return (
-    <div
-      className={`search search--${
-        locationOptions.length > 0 ? 'open' : 'closed'
-      }`}
-    >
-      <div className="search__input-wrapper">
-        <DebounceInput
-          className="search__input"
-          debounceTimeout={200}
+    <SearchWrapper>
+      <SearchInputWrapper open={locationOptions.length > 0}>
+        <Input
           type="text"
           placeholder="Search for location"
           value={searchValue}
-          onChange={(ev) => handleSearchChange(ev)}
-          onKeyDown={(ev) => handleKeyDown(ev)}
+          onChange={(ev: ChangeEvent): void => handleSearchChange(ev)}
+          onKeyDown={(
+            ev: React.KeyboardEvent<HTMLInputElement>
+          ): Promise<void> => handleKeyDown(ev)}
         />
         <LocationIconSvg
-          className="search__location-icon"
           onClick={handleLocationClick}
+          css={`
+            cursor: pointer;
+            fill: ${({ theme }: { [key: string]: DefaultTheme }) =>
+              theme.colors.secondary};
+          `}
         />
-      </div>
-      <ul className="search__options-wrapper">
+      </SearchInputWrapper>
+      <OptionsContainer marginTop={`${props.size.height}px`}>
         {locationOptions.map((item: string, index) => {
           // Create a key for items
           const key = `${spaceToDash(item).toLowerCase()}-${index}`;
 
           return (
-            <li
-              className="search__option"
-              key={key}
-              onClick={() => handleOptionClick(item)}
-            >
+            <LocationOption key={key} onClick={() => handleOptionClick(item)}>
               {item}
-            </li>
+            </LocationOption>
           );
         })}
-      </ul>
-    </div>
+      </OptionsContainer>
+    </SearchWrapper>
   );
 };
 
-export default Search;
+export default sizeMe({ monitorHeight: true })(Search);

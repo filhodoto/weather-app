@@ -3,6 +3,7 @@ import {
   FETCH_WEATHER_SUCCESS,
   SET_LOADING,
   SET_LOCATION,
+  SET_THEME,
 } from 'state/actions/appActions';
 
 export interface IWeatherState {
@@ -26,7 +27,8 @@ export interface IAppState {
   settings: ISettings;
 }
 
-interface ISettings {
+export interface ISettings {
+  theme: 'light' | 'dark';
   units: 'metric' | 'imperial';
   lang: 'en' | 'pt';
 }
@@ -48,6 +50,7 @@ export const appState: IAppState = {
   settings: {
     units: 'metric',
     lang: 'en',
+    theme: 'dark',
   },
 };
 
@@ -63,6 +66,12 @@ export const appReducer = (state: IAppState, action: any): any => {
       return {
         ...state,
         location: action.payload,
+      };
+
+    case SET_THEME:
+      return {
+        ...state,
+        settings: { theme: action.payload },
       };
 
     case FETCH_WEATHER_SUCCESS:
