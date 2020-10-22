@@ -5,7 +5,7 @@ import { setTheme } from 'state/actions/appActions';
 import { ISettings } from 'state/reducers/appReducer';
 import WeatherIcon from './WeatherIcon/WeatherIcon';
 
-const Toggle = styled.div<{ styling: ISettings['theme'] }>`
+export const Toggle = styled.div<{ styling: ISettings['theme'] }>`
   --circleSize: 20px;
   --circleMargin: 0.2rem;
   display: flex;
@@ -47,11 +47,12 @@ const Toggle = styled.div<{ styling: ISettings['theme'] }>`
     `}
 `;
 
-const ToggleSwitch: FC = () => {
+// Note:: When using a component with "styled(component)" we need to let the styled component use a className
+const ToggleSwitch: FC<{ className?: string }> = ({ className }) => {
   const { dispatch, state } = useContext(StoreContext)!;
 
   const icons: Record<ISettings['theme'], string> = {
-    dark: 'night-clear',
+    dark: 'moon-waxing-crescent-5',
     light: 'day-sunny',
   };
 
@@ -62,7 +63,7 @@ const ToggleSwitch: FC = () => {
   };
 
   return (
-    <Toggle styling={state.settings.theme}>
+    <Toggle styling={state.settings.theme} className={className}>
       <WeatherIcon
         id={icons[state.settings.theme]}
         size={'1rem'}

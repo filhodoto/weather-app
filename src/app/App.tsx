@@ -7,8 +7,8 @@ import React, {
   Dispatch,
 } from 'react';
 import styled, { ThemeProvider } from 'styled-components';
-import GlobalStyles from 'components/theme/globalStyles';
-import { themeController } from 'components/theme/theme';
+import GlobalStyles from 'styles/globalStyles';
+import { themeController } from 'theme/theme';
 
 import Footer from 'components/Footer/Footer';
 import Header from 'components/Header/Header';
@@ -29,11 +29,7 @@ import {
 } from 'state/actions/appActions';
 import Loading from 'components/ui/Loading/Loading';
 import FeedbackMsg from 'components/ui/FeedbackMsg/FeedbackMsg';
-
-// TODO:: 1 - Fix mobile issues. Header and when writing "Caldas"
-// TODO:: 2 - Better way of doing media queries
-// TODO:: 2 - Implemente github pages or netlify on project
-// TODO:: 3 - Check how to implement jest testing
+import { device } from 'styles/MediaQueries';
 
 // Define store context
 export const StoreContext = createContext<{
@@ -71,7 +67,9 @@ const AppWrapper = styled.div`
     width: 100%;
     padding: 20px;
 
-    @media screen and (min-width: 480px) {
+    // Wrapping full line ${``} beacuse of this TS issue:
+    // https://github.com/microsoft/typescript-styled-plugin/issues/110
+    ${`@media screen and ${device.min.tablet}`} {
       padding: 10px;
     }
   }

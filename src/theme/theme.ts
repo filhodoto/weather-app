@@ -1,6 +1,6 @@
 import { DefaultTheme } from 'styled-components/macro';
-import { BaseTheme } from 'components/theme/themes';
 import { ISettings } from 'state/reducers/appReducer';
+import { BaseTheme } from './themes';
 
 // Define baseTheme for definitions that will be shared between themes
 export const baseTheme: BaseTheme = {

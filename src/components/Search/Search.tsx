@@ -9,6 +9,7 @@ import sizeMe from 'react-sizeme';
 // Import svg elements in a basic way from an image file
 import { ReactComponent as LocationIconSvg } from 'assets/icons/location-icon.svg';
 import { spaceToDash } from 'helpers/helpers';
+import { device } from 'styles/MediaQueries';
 
 const InputPadding: string = '0.6rem 1rem';
 const InputBorderRadius: string = '5px;';
@@ -21,7 +22,9 @@ const SearchWrapper = styled.div`
   border: none;
   font-size: medium;
 
-  @media screen and (min-width: 480px) {
+  // Wrapping full line ${``} beacuse of this TS issue:
+  // https://github.com/microsoft/typescript-styled-plugin/issues/110
+  ${`@media screen and ${device.min.mobile}`} {
     min-width: 220px;
     width: auto;
   }
