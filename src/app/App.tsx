@@ -50,9 +50,10 @@ export async function updateLocationInStore(dispatch: Dispatch<any>) {
 }
 
 const AppWrapper = styled.div`
+  height: 100%;
+  overflow: auto;
   display: grid;
   grid-template-rows: auto 1fr auto;
-  min-height: 100vh;
   text-align: center;
 
   color: ${(props) => props.theme.colors.primary};
