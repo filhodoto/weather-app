@@ -188,12 +188,19 @@ const Search: FC<{ size: IReactSizeMe }> = (props): JSX.Element => {
           `}
         />
       </SearchInputWrapper>
-      <OptionsContainer marginTop={`${props.size.height}px`}>
+      <OptionsContainer
+        marginTop={`${props.size.height}px`}
+        data-testid="options-container"
+      >
         {locationOptions.map((item: string, index) => {
           // Create a key for items
           const key = `${spaceToDash(item).toLowerCase()}-${index}`;
           return (
-            <LocationOption key={key} onClick={() => handleOptionClick(item)}>
+            <LocationOption
+              data-testid="options-item"
+              key={key}
+              onClick={() => handleOptionClick(item)}
+            >
               {item}
             </LocationOption>
           );

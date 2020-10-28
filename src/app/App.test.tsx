@@ -1,31 +1,25 @@
 import React from 'react';
-import { render, cleanup, screen } from '@testing-library/react';
+import { render, cleanup } from '@testing-library/react';
 import App from './App';
+import { renderWithContextAndTheme } from 'helpers/jest-testing';
 
 afterEach(cleanup);
 
 describe('Elements are rendered on first load', () => {
-  it('Renders logo text', () => {
-    const { getByText } = render(<App />);
-    expect(getByText(/weather app/i)).toBeInTheDocument();
-  });
-
-  it('Renders Footer', () => {
-    const { getByText } = render(<App />);
-    expect(getByText(/created by/i)).toBeInTheDocument();
-  });
-
-  it('Renders Loading', () => {
-    const { getByText } = render(<App />);
+  it('Renders logo, loading and footer', () => {
+    const { getByTestId, getByText } = render(renderWithContextAndTheme(App));
+    expect(getByTestId(/logo/i)).toBeInTheDocument();
+    expect(getByTestId('footer')).toBeInTheDocument();
     expect(getByText(/Loading.../i)).toBeInTheDocument();
   });
+
+  // it('Renders Footer', () => {
+  //   const { getByTestId } = render(renderWithContextAndTheme(App));
+  //   expect(getByTestId('footer')).toBeInTheDocument();
+  // });
+
+  // it('Renders Loading on app start', () => {
+  //   const { getByText } = render(renderWithContextAndTheme(App));
+  //   expect(getByText(/Loading.../i)).toBeInTheDocument();
+  // });
 });
-
-//TODO:: Passar o Context para poder criar o Search e todos os outros components
-
-// describe('Snapshot testing', () => {
-//   test('should take App snapshot', () => {
-//     const { asFragment } = render(<App />);
-//     expect(asFragment(<App />)).toMatchSnapshot();
-//   });
-// });

@@ -51,7 +51,7 @@ const Header = (): JSX.Element => {
   return (
     <HeaderStyled>
       <LeftSection>
-        <Logo>Weather App</Logo>
+        <Logo data-testid="logo">Weather App</Logo>
         <ThemeSwitch />
       </LeftSection>
       <Search />

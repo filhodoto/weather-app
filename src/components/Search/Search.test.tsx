@@ -1,18 +1,27 @@
-import React from 'react';
 import { render, cleanup } from '@testing-library/react';
 import Search from './Search';
-import { StoreContext } from 'app/App';
+import { renderWithContextAndTheme } from 'helpers/jest-testing';
+import userEvent from '@testing-library/user-event';
 
 afterEach(cleanup);
 
 describe('Search component tests', () => {
-  it(' teste somar só porque sim', () => {
-    expect(1 + 1).toBe(2);
+  it('Input search should be empty', async () => {
+    const { findByPlaceholderText } = await render(
+      renderWithContextAndTheme(Search)
+    );
+    const input = await findByPlaceholderText(/Search for location/i);
+
+    await expect(input).toHaveValue('');
   });
 
-  it('Test snapshot Search', async () => {
-    const { findByPlaceholderText } = await render(<Search />);
+  it('Input search value change should show location options', async () => {
+    const { findByPlaceholderText } = await render(
+      renderWithContextAndTheme(Search)
+    );
     const input = await findByPlaceholderText(/Search for location/i);
-    await expect(input).toHaveValue('');
+    await userEvent.type(input, 'Lis');
+
+    await expect(input).toHaveValue('Lis');
   });
 });
