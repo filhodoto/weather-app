@@ -115,6 +115,7 @@ const Search: FC<{ size: IReactSizeMe }> = (props): JSX.Element => {
       searchQuery,
       state['settings']['lang']
     );
+
     // Set options in state
     setlocationOptions(options);
   };

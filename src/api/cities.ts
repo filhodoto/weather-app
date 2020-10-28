@@ -39,12 +39,22 @@ export const fetchCities = async (
     ) {
       // For each location in res.hits return the previous
       // array values + the new location value
-      // Check for nulls because somehow we've seen arrays of null values
+      // First Check for nulls because somehow we've seen arrays of null values (doesn't seem to work)
+      if (location.locale_names[0] === null) alert('is null');
       return location.locale_names[0] === null
         ? [...previousArrayState]
         : [...previousArrayState, location.locale_names[0]];
     },
     []);
+
+    console.log('result ', result);
+    // Second check for null values that we sometimes get from API (can't recreate it to debug)
+    // If any result is null (which means something went wrong) do not save it in session storage and return empty value
+    if (result[0] === null) {
+      //TODO:: Remove this alert when we are hable to reproduce the error again
+      alert('something went wrong and we have null values');
+      return [];
+    }
 
     // Save values on sessionStorage
     sessionStorageAvailable &&
