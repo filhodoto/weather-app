@@ -3,7 +3,7 @@ import styled, { DefaultTheme, css } from 'styled-components/macro';
 import { setLocation } from 'state/actions/appActions';
 import { StoreContext, updateLocationInStore } from 'app/App';
 import { fetchCities } from 'api/cities';
-import { DebounceInput } from 'react-debounce-input';
+import { DebounceInput, DebounceInputProps } from 'react-debounce-input';
 import sizeMe from 'react-sizeme';
 
 // Import svg elements in a basic way from an image file
@@ -50,7 +50,7 @@ const SearchInputWrapper = styled.div<{ open: boolean }>`
     `}
 `;
 
-const Input = styled(DebounceInput)`
+const Input = styled(DebounceInput)<DebounceInputProps<{}, {}>>`
   flex: 1;
   padding-right: 10px;
   border: none;
