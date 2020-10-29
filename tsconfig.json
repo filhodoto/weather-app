@@ -16,6 +16,9 @@
     "noEmit": true,
     "jsx": "react"
   },
+  "typeAcquisition": {
+    "include": [ "jest" ]
+  },
   "include": ["src"],
-  "exclude": ["./node_modules", "./public", "./dist", "./.vscode"]
+  "exclude": ["./node_modules", "./public", "./dist", "./.vscode"],
 }

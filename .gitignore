@@ -7,7 +7,6 @@
 
 # dev
 /.history
-/.vscode/
 
 # testing
 /coverage
