@@ -20,7 +20,7 @@ const Weather: FC = (): JSX.Element => {
   const { timezone, place, id, temperature, feedback } = state.weather;
 
   return (
-    <Information>
+    <Information data-testid="weather-information">
       <p className="information__timezone">{timezone}</p>
       <Heading fontSize={'1.5rem'}>{place}</Heading>
       <WeatherIcon id={id} size="7rem" padding="15px 0 40px" />
