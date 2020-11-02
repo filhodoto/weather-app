@@ -2,6 +2,7 @@ import React, { FC, useContext } from 'react';
 import styled from 'styled-components/macro';
 import { StoreContext } from 'app/App';
 import WeatherIcon from 'components/ui/WeatherIcon/WeatherIcon';
+import { roundTo } from 'helpers/helpers';
 
 const Information = styled.div`
   & > * {
@@ -24,7 +25,7 @@ const Weather: FC = (): JSX.Element => {
       <p className="information__timezone">{timezone}</p>
       <Heading fontSize={'1.5rem'}>{place}</Heading>
       <WeatherIcon id={id} size="7rem" padding="15px 0 40px" />
-      <Heading fontSize={'2rem'}>{temperature}º</Heading>
+      <Heading fontSize={'2rem'}>{roundTo(temperature, 1)}º</Heading>
       <p className="information__feedback">{feedback}</p>
     </Information>
   );
