@@ -16,6 +16,7 @@ export const fetchCities = async (
     // Return cached response in sessionStorage
     // sessionStorage only stores strings, so to store and retriev Arrays
     // we need to JSON.parse the value when we restore it and stringify when we save it
+    // https://community.algolia.com/places/api-clients.html#rest-api
     return JSON.parse(sessionStorage.getItem(cacheKey)!);
   } else {
     const url = `https://places-dsn.algolia.net/1/places/query`;
@@ -40,22 +41,32 @@ export const fetchCities = async (
         location: any
       ) {
         // For each location in res.hits return the previous
-        // array values + the new location value
-        // First Check for nulls because somehow we've seen arrays of null values (doesn't seem to work)
-        if (location.locale_names[0] === null) alert('is null');
-        return location.locale_names[0] === null
-          ? [...previousArrayState]
-          : [...previousArrayState, location.locale_names[0]];
+        // array values + the new location value.
+        // Define location name, sometimes API doesn't send locale, when that happens th response is an object, instead of a value
+        // So we need to check for several possibilities.
+        // 1 - check for location.name
+        // 2 - check if there's a an english version
+        // 3 - check if there's a default
+
+        var locationName: string = (function () {
+          switch (true) {
+            case typeof location.locale_names[0] !== 'undefined' &&
+              typeof location.locale_names[0] === 'string':
+              return location.locale_names[0];
+
+            case typeof location.locale_names.en !== 'undefined' &&
+              typeof location.locale_names.en[0] === 'string':
+              return location.locale_names.en[0];
+
+            case typeof location.locale_names.default !== 'undefined' &&
+              typeof location.locale_names.default[0] === 'string':
+              return location.locale_names.default[0];
+          }
+        })();
+
+        return [...previousArrayState, locationName];
       },
       []);
-
-      // Second check for null values that we sometimes get from API (can't recreate it to debug)
-      // If any result is null (which means something went wrong) do not save it in session storage and return empty value
-      if (result[0] === null) {
-        //TODO:: Remove this alert when we are hable to reproduce the error again
-        alert('something went wrong and we have null values');
-        return [];
-      }
 
       // Save values on sessionStorage
       sessionStorageAvailable &&

@@ -1,8 +1,13 @@
-import { render, cleanup, screen } from '@testing-library/react';
+import {
+  render,
+  cleanup,
+  screen,
+  act,
+  waitForElementToBeRemoved,
+} from '@testing-library/react';
 import { fetchCities } from 'api/cities';
 import { renderWithContextAndTheme } from 'helpers/jest-testing';
 import userEvent from '@testing-library/user-event';
-import { act } from 'react-dom/test-utils';
 import Search from './Search';
 
 // Clean tests after each test
@@ -22,19 +27,33 @@ describe('Search API Tests', () => {
     fetchMock.resetMocks();
   });
 
-  it('Should return a list of cities', async () => {
+  it('Should return a city name when receing 3 types of location data', async () => {
     // Mock the API call we use in fetchCities and give it a dummy response that would equal a query in real API call
     fetchMock.mockResponseOnce(
       JSON.stringify({
-        hits: [{ locale_names: ['P.Quang Trung'] }],
+        hits: [
+          { locale_names: ['Porto'] },
+          {
+            locale_names: {
+              default: ['Lisbon', 'Lisboa'],
+              ru: ['Туркмения'],
+            },
+          },
+          {
+            locale_names: {
+              en: ['Asansol'],
+              ja: ['アサンソル'],
+              ru: ['Асансол'],
+            },
+          },
+        ],
       })
     );
-
-    // Fetch cities with query "pq" (could be anything), here we are not using fetch but jest-fetch-mock
-    const cities = await fetchCities('pq', 'en');
+    // Fetch cities with query "mockvalue" (could be anything), here we are not using fetch but jest-fetch-mock
+    const cities = await fetchCities('mockvalue', 'en');
 
     // Expect cities to be the same result we would have in our mockResponse
-    expect(cities).toStrictEqual(['P.Quang Trung']);
+    expect(cities).toStrictEqual(['Porto', 'Lisbon', 'Asansol']);
   });
 
   it('Should return and empty array if there is no city with query name ', async () => {
@@ -58,7 +77,7 @@ describe('Search API Tests', () => {
       })
     );
 
-    await render(renderWithContextAndTheme(Search));
+    render(renderWithContextAndTheme(Search));
 
     // Find search input
     const input = await screen.findByPlaceholderText(/Search for location/i);
@@ -82,7 +101,7 @@ describe('Search API Tests', () => {
       })
     );
 
-    await render(renderWithContextAndTheme(Search));
+    render(renderWithContextAndTheme(Search));
 
     // Find search input
     const input = await screen.findByPlaceholderText(/Search for location/i);
