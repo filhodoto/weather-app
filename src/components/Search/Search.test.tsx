@@ -1,10 +1,4 @@
-import {
-  render,
-  cleanup,
-  screen,
-  act,
-  waitForElementToBeRemoved,
-} from '@testing-library/react';
+import { render, cleanup, screen, act } from '@testing-library/react';
 import { fetchCities } from 'api/cities';
 import { renderWithContextAndTheme } from 'helpers/jest-testing';
 import userEvent from '@testing-library/user-event';
@@ -15,7 +9,7 @@ afterEach(cleanup);
 
 describe('Search DOM tests', () => {
   it('Input search should be empty', async () => {
-    await render(renderWithContextAndTheme(Search));
+    render(renderWithContextAndTheme(Search));
     const input = await screen.findByPlaceholderText(/Search for location/i);
 
     expect(input).toHaveValue('');

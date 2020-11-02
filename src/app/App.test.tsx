@@ -1,4 +1,3 @@
-import React from 'react';
 import { render, cleanup } from '@testing-library/react';
 import App from './App';
 import { renderWithContextAndTheme } from 'helpers/jest-testing';
@@ -12,14 +11,4 @@ describe('Elements are rendered on first load', () => {
     expect(getByTestId('footer')).toBeInTheDocument();
     expect(getByText(/Loading.../i)).toBeInTheDocument();
   });
-
-  // it('Renders Footer', () => {
-  //   const { getByTestId } = render(renderWithContextAndTheme(App));
-  //   expect(getByTestId('footer')).toBeInTheDocument();
-  // });
-
-  // it('Renders Loading on app start', () => {
-  //   const { getByText } = render(renderWithContextAndTheme(App));
-  //   expect(getByText(/Loading.../i)).toBeInTheDocument();
-  // });
 });
