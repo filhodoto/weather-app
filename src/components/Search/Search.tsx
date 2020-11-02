@@ -3,7 +3,7 @@ import styled, { DefaultTheme, css } from 'styled-components/macro';
 import { setLocation } from 'state/actions/appActions';
 import { StoreContext, updateLocationInStore } from 'app/App';
 import { fetchCities } from 'api/cities';
-import { DebounceInput } from 'react-debounce-input';
+import { DebounceInput, DebounceInputProps } from 'react-debounce-input';
 import sizeMe from 'react-sizeme';
 
 // Import svg elements in a basic way from an image file
@@ -50,7 +50,7 @@ const SearchInputWrapper = styled.div<{ open: boolean }>`
     `}
 `;
 
-const Input = styled(DebounceInput)`
+const Input = styled(DebounceInput)<DebounceInputProps<{}, {}>>`
   flex: 1;
   padding-right: 10px;
   border: none;
@@ -115,6 +115,7 @@ const Search: FC<{ size: IReactSizeMe }> = (props): JSX.Element => {
       searchQuery,
       state['settings']['lang']
     );
+
     // Set options in state
     setlocationOptions(options);
   };
@@ -188,12 +189,19 @@ const Search: FC<{ size: IReactSizeMe }> = (props): JSX.Element => {
           `}
         />
       </SearchInputWrapper>
-      <OptionsContainer marginTop={`${props.size.height}px`}>
+      <OptionsContainer
+        marginTop={`${props.size.height}px`}
+        data-testid="options-container"
+      >
         {locationOptions.map((item: string, index) => {
           // Create a key for items
           const key = `${spaceToDash(item).toLowerCase()}-${index}`;
           return (
-            <LocationOption key={key} onClick={() => handleOptionClick(item)}>
+            <LocationOption
+              data-testid="options-item"
+              key={key}
+              onClick={() => handleOptionClick(item)}
+            >
               {item}
             </LocationOption>
           );

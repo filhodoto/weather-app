@@ -12,7 +12,7 @@ const FooterStyled = styled.footer`
 
 const Footer = (): JSX.Element => {
   return (
-    <FooterStyled>
+    <FooterStyled data-testid="footer">
       created by{' '}
       <a href="http://goncaloramalho.com" target="blank_">
         {' '}
