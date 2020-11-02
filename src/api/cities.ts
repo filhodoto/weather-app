@@ -1,6 +1,13 @@
 import { arrayNotEmpty, spaceToDash } from 'helpers/helpers';
 import { IAppState } from 'state/reducers/appReducer';
 
+type LocaleMap = {
+  [code: string]: string[];
+};
+interface Location {
+  locale_names: string[] | LocaleMap;
+}
+
 export const fetchCities = async (
   search: string,
   lang: IAppState['settings']['lang']
@@ -36,37 +43,30 @@ export const fetchCities = async (
     // If result isn't empty
     if (arrayNotEmpty(res.hits)) {
       // Create new array with only the name of the hits
-      const result: string[] = res.hits.reduce(function (
-        previousArrayState: string[],
-        location: any
-      ) {
-        // For each location in res.hits return the previous
-        // array values + the new location value.
-        // Define location name, sometimes API doesn't send locale, when that happens th response is an object, instead of a value
-        // So we need to check for several possibilities.
-        // 1 - check for location.name
-        // 2 - check if there's a an english version
-        // 3 - check if there's a default
+      const result: string[] = res.hits.reduce(
+        (previousArrayState: string[], location: Location) => {
+          // For each location in res.hits return the previous
+          // array values + the new location value.
+          // Define location name, sometimes API doesn't send locale, when that happens th response is an object, instead of a value
+          // So we need to check for several possibilities.
+          // 1 - check for location.name
+          // 2 - check if there's a an english version
+          // 3 - check if there's a default
 
-        var locationName: string = (function () {
-          switch (true) {
-            case typeof location.locale_names[0] !== 'undefined' &&
-              typeof location.locale_names[0] === 'string':
-              return location.locale_names[0];
+          let locationName: string = '';
 
-            case typeof location.locale_names.en !== 'undefined' &&
-              typeof location.locale_names.en[0] === 'string':
-              return location.locale_names.en[0];
-
-            case typeof location.locale_names.default !== 'undefined' &&
-              typeof location.locale_names.default[0] === 'string':
-              return location.locale_names.default[0];
+          if (Array.isArray(location.locale_names)) {
+            locationName = location.locale_names[0];
+          } else if (location.locale_names.en) {
+            locationName = location.locale_names.en[0];
+          } else {
+            locationName = location.locale_names.default[0];
           }
-        })();
 
-        return [...previousArrayState, locationName];
-      },
-      []);
+          return [...previousArrayState, locationName];
+        },
+        []
+      );
 
       // Save values on sessionStorage
       sessionStorageAvailable &&
