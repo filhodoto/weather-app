@@ -63,7 +63,11 @@ const ToggleSwitch: FC<{ className?: string }> = ({ className }) => {
   };
 
   return (
-    <Toggle styling={state.settings.theme} className={className}>
+    <Toggle
+      styling={state.settings.theme}
+      className={className}
+      aria-label='switch theme'
+    >
       <WeatherIcon
         id={icons[state.settings.theme]}
         size={'1rem'}

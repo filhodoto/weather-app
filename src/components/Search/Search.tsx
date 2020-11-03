@@ -50,7 +50,7 @@ const SearchInputWrapper = styled.div<{ open: boolean }>`
     `}
 `;
 
-const Input = styled(DebounceInput)<DebounceInputProps<{}, {}>>`
+const Input = styled(DebounceInput)<DebounceInputProps<{}, { id: string }>>`
   flex: 1;
   padding-right: 10px;
   border: none;
@@ -171,8 +171,10 @@ const Search: FC<{ size: IReactSizeMe }> = (props): JSX.Element => {
     <SearchWrapper>
       <SearchInputWrapper open={locationOptions.length > 0}>
         <Input
-          type="text"
-          placeholder="Search for location"
+          id='search-input'
+          aria-label='search location'
+          type='text'
+          placeholder='Search for location'
           value={searchValue}
           debounceTimeout={800}
           onChange={(ev: ChangeEvent): void => handleSearchChange(ev)}
@@ -180,8 +182,10 @@ const Search: FC<{ size: IReactSizeMe }> = (props): JSX.Element => {
             ev: React.KeyboardEvent<HTMLInputElement>
           ): Promise<void> => handleKeyDown(ev)}
         />
+
         <LocationIconSvg
           onClick={handleLocationClick}
+          aria-label='Get users location'
           css={`
             cursor: pointer;
             fill: ${({ theme }: { [key: string]: DefaultTheme }) =>
@@ -191,14 +195,16 @@ const Search: FC<{ size: IReactSizeMe }> = (props): JSX.Element => {
       </SearchInputWrapper>
       <OptionsContainer
         marginTop={`${props.size.height}px`}
-        data-testid="options-container"
+        data-testid='options-container'
+        aria-label='locations list'
       >
         {locationOptions.map((item: string, index) => {
           // Create a key for items
           const key = `${spaceToDash(item).toLowerCase()}-${index}`;
           return (
             <LocationOption
-              data-testid="options-item"
+              data-testid='options-item'
+              aria-label='location option'
               key={key}
               onClick={() => handleOptionClick(item)}
             >

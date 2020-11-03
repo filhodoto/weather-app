@@ -9,7 +9,7 @@ import React, {
 import styled, { ThemeProvider } from 'styled-components';
 import GlobalStyles from 'styles/globalStyles';
 import { themeController } from 'theme/theme';
-
+import { Helmet } from 'react-helmet';
 import Footer from 'components/Footer/Footer';
 import Header from 'components/Header/Header';
 import Weather from 'components/Weather/Weather';
@@ -137,13 +137,27 @@ const App: FC = (): JSX.Element => {
   return (
     <ThemeProvider theme={themeController[state.settings.theme]!}>
       <AppWrapper>
+        <Helmet>
+          <meta charSet='utf-8' />
+          <meta
+            name='description'
+            content='Weather app to check current weather in any location'
+          />
+
+          <title>Weather App</title>
+          <html lang={state.settings.lang} />
+          <link
+            href='https://fonts.googleapis.com/css2?family=Abel&family=Nunito:wght@300;400;700&display=swap'
+            rel='stylesheet'
+          ></link>
+        </Helmet>
         <StoreContext.Provider value={{ state, dispatch }}>
           <Header />
           <MainWrapper>
             {state.loading ? (
               <Loading />
             ) : state.errorMsg ? (
-              <FeedbackMsg type="error" message={state.errorMsg} />
+              <FeedbackMsg type='error' message={state.errorMsg} />
             ) : (
               <Weather />
             )}

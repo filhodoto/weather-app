@@ -29,8 +29,12 @@ const Weather: FC = (): JSX.Element => {
 
   return (
     <Information data-testid='weather-information'>
-      <p className='information__timezone'>{timezone}</p>
-      <Heading fontSize={'1.5rem'}>{place}</Heading>
+      <p className='information__timezone' aria-label='timezone'>
+        {timezone}
+      </p>
+      <Heading fontSize={'1.5rem'} aria-label='location'>
+        {place}
+      </Heading>
       <WeatherIcon id={id} size='7rem' padding='15px 0' />
       <p className='information__feedback'>{feedback}</p>
       <Heading
@@ -38,6 +42,7 @@ const Weather: FC = (): JSX.Element => {
         css={`
           margin-top: 15px;
         `}
+        aria-label='temperature'
       >
         {roundTo(temperature, 1)}º
       </Heading>
@@ -46,6 +51,7 @@ const Weather: FC = (): JSX.Element => {
         css={`
           font-weight: 400;
         `}
+        aria-label='feels like temperature'
       >
         Feels like {roundTo(feelsLike, 1)}º
       </Heading>

@@ -35,7 +35,7 @@ const LeftSection = styled.section`
   }
 `;
 
-const Logo = styled.div`
+const Logo = styled.h1`
   font-family: ${(props) => props.theme.fonts.headingFont};
 `;
 
@@ -51,7 +51,9 @@ const Header = (): JSX.Element => {
   return (
     <HeaderStyled>
       <LeftSection>
-        <Logo data-testid="logo">Weather App</Logo>
+        <Logo data-testid='logo' aria-label='app logo'>
+          Weather App
+        </Logo>
         <ThemeSwitch />
       </LeftSection>
       <Search />
