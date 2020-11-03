@@ -28,14 +28,19 @@ const Weather: FC = (): JSX.Element => {
   } = state.weather;
 
   return (
-    <Information data-testid='weather-information'>
+    <Information aria-label='weather information'>
       <p className='information__timezone' aria-label='timezone'>
         {timezone}
       </p>
       <Heading fontSize={'1.5rem'} aria-label='location'>
         {place}
       </Heading>
-      <WeatherIcon id={id} size='7rem' padding='15px 0' />
+      <WeatherIcon
+        id={id}
+        size='7rem'
+        padding='15px 0'
+        aria-label='weather icon'
+      />
       <p className='information__feedback'>{feedback}</p>
       <Heading
         fontSize={'2rem'}

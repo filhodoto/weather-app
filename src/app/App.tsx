@@ -81,8 +81,10 @@ const AppWrapper = styled.div`
     display: contents;
   }
 
-  input:focus {
-    outline: none;
+  input {
+    &:focus {
+      outline: none;
+    }
   }
 `;
 

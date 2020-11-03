@@ -10,6 +10,7 @@ import sizeMe from 'react-sizeme';
 import { ReactComponent as LocationIconSvg } from 'assets/icons/location-icon.svg';
 import { spaceToDash } from 'helpers/helpers';
 import { device } from 'styles/MediaQueries';
+import { acessibilityFocus } from 'styles/sharedStyles';
 
 const InputPadding: string = '0.6rem 1rem';
 const InputBorderRadius: string = '5px;';
@@ -50,7 +51,7 @@ const SearchInputWrapper = styled.div<{ open: boolean }>`
     `}
 `;
 
-const Input = styled(DebounceInput)<DebounceInputProps<{}, { id: string }>>`
+const Input = styled(DebounceInput)<DebounceInputProps<{}, {}>>`
   flex: 1;
   padding-right: 10px;
   border: none;
@@ -171,8 +172,6 @@ const Search: FC<{ size: IReactSizeMe }> = (props): JSX.Element => {
     <SearchWrapper>
       <SearchInputWrapper open={locationOptions.length > 0}>
         <Input
-          id='search-input'
-          aria-label='search location'
           type='text'
           placeholder='Search for location'
           value={searchValue}
@@ -185,11 +184,16 @@ const Search: FC<{ size: IReactSizeMe }> = (props): JSX.Element => {
 
         <LocationIconSvg
           onClick={handleLocationClick}
-          aria-label='Get users location'
+          onKeyPress={(ev) => {
+            if (ev.key === 'Enter') handleLocationClick();
+          }}
+          aria-label='Get current weather'
+          tabIndex={0}
           css={`
             cursor: pointer;
             fill: ${({ theme }: { [key: string]: DefaultTheme }) =>
               theme.colors.secondary};
+            ${acessibilityFocus}
           `}
         />
       </SearchInputWrapper>

@@ -4,6 +4,7 @@ import { StoreContext } from 'app/App';
 import { setTheme } from 'state/actions/appActions';
 import { ISettings } from 'state/reducers/appReducer';
 import WeatherIcon from './WeatherIcon/WeatherIcon';
+import { acessibilityFocus } from 'styles/sharedStyles';
 
 export const Toggle = styled.div<{ styling: ISettings['theme'] }>`
   --circleSize: 20px;
@@ -11,17 +12,19 @@ export const Toggle = styled.div<{ styling: ISettings['theme'] }>`
   display: flex;
   align-items: center;
 
-  label {
+  button {
     display: flex;
     align-items: center;
     width: 3.5rem;
     height: 1.8rem;
+    padding: 0;
     background: ${(props) => props.theme.colors.secondary};
     border-radius: 1rem;
     position: relative;
     border: 1px solid ${(props) => props.theme.colors.primary};
     cursor: pointer;
     transition: all 0.3s ease;
+    ${acessibilityFocus}
   }
 
   // Default
@@ -57,25 +60,37 @@ const ToggleSwitch: FC<{ className?: string }> = ({ className }) => {
   };
 
   const handleToggleClick = () => {
+    switchTheme();
+  };
+
+  const handleKeyPress = (ev: React.KeyboardEvent<HTMLButtonElement>) => {
+    ev.preventDefault();
+    if (ev.key === 'Enter') {
+      switchTheme();
+    }
+  };
+
+  const switchTheme = () => {
     const theme: ISettings['theme'] =
       state.settings.theme === 'dark' ? 'light' : 'dark';
     setTheme(theme, dispatch);
   };
 
   return (
-    <Toggle
-      styling={state.settings.theme}
-      className={className}
-      aria-label='switch theme'
-    >
+    <Toggle styling={state.settings.theme} className={className}>
       <WeatherIcon
         id={icons[state.settings.theme]}
         size={'1rem'}
         padding={'0 0.6rem 0 0'}
       />
-      <label onClick={handleToggleClick}>
+      <button
+        onClick={handleToggleClick}
+        onKeyPress={handleKeyPress}
+        aria-label='switch theme'
+        tabIndex={0}
+      >
         <span></span>
-      </label>
+      </button>
     </Toggle>
   );
 };
