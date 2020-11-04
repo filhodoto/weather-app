@@ -145,8 +145,6 @@ const App: FC = (): JSX.Element => {
             name='description'
             content='Weather app to check current weather in any location'
           />
-
-          <title>Weather App</title>
           <html lang={state.settings.lang} />
           <link
             href='https://fonts.googleapis.com/css2?family=Abel&family=Nunito:wght@300;400;700&display=swap'
