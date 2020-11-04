@@ -1,4 +1,4 @@
-import { getCurrentYear } from 'helpers/helpers';
+import { getCurrentYear } from 'helpers/generic/generic';
 import React from 'react';
 import styled from 'styled-components/macro';
 

@@ -6,7 +6,7 @@ export const spaceToDash = (string: string): string =>
 export const arrayNotEmpty = (arr: any[]): boolean =>
   typeof arr != 'undefined' && arr != null && arr.length > 0;
 
-export const roundTo = (value: number, decimalPlace: number) => {
+export const roundTo = (value: number, decimalPlace: number): number => {
   var multiplier = Math.pow(10, decimalPlace || 0);
   return Math.round(value * multiplier) / multiplier;
 };

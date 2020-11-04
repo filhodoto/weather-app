@@ -8,7 +8,7 @@ import sizeMe from 'react-sizeme';
 
 // Import svg elements in a basic way from an image file
 import { ReactComponent as LocationIconSvg } from 'assets/icons/location-icon.svg';
-import { spaceToDash } from 'helpers/helpers';
+import { spaceToDash } from 'helpers/generic/generic';
 import { device } from 'styles/MediaQueries';
 import { acessibilityFocus } from 'styles/sharedStyles';
 

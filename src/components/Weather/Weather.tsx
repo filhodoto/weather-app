@@ -2,7 +2,7 @@ import React, { FC, useContext } from 'react';
 import styled from 'styled-components/macro';
 import { StoreContext } from 'app/App';
 import WeatherIcon from 'components/ui/WeatherIcon/WeatherIcon';
-import { roundTo } from 'helpers/helpers';
+import { roundTo } from 'helpers/generic/generic';
 
 const Information = styled.div`
   & > * {
