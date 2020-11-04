@@ -71,7 +71,7 @@ export const appReducer = (state: IAppState, action: any): any => {
     case SET_THEME:
       return {
         ...state,
-        settings: { theme: action.payload },
+        settings: { ...state.settings, theme: action.payload },
       };
 
     case FETCH_WEATHER_SUCCESS:

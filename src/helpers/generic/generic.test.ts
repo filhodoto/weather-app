@@ -1,4 +1,4 @@
-import { arrayNotEmpty, getCurrentYear, spaceToDash } from './helpers';
+import { arrayNotEmpty, getCurrentYear, spaceToDash } from './generic';
 
 it('Should return current year', () => {
   expect(getCurrentYear(new Date(2018, 11))).toBe(2018);

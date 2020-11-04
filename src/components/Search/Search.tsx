@@ -8,8 +8,9 @@ import sizeMe from 'react-sizeme';
 
 // Import svg elements in a basic way from an image file
 import { ReactComponent as LocationIconSvg } from 'assets/icons/location-icon.svg';
-import { spaceToDash } from 'helpers/helpers';
+import { spaceToDash } from 'helpers/generic/generic';
 import { device } from 'styles/MediaQueries';
+import { acessibilityFocus } from 'styles/sharedStyles';
 
 const InputPadding: string = '0.6rem 1rem';
 const InputBorderRadius: string = '5px;';
@@ -171,8 +172,8 @@ const Search: FC<{ size: IReactSizeMe }> = (props): JSX.Element => {
     <SearchWrapper>
       <SearchInputWrapper open={locationOptions.length > 0}>
         <Input
-          type="text"
-          placeholder="Search for location"
+          type='text'
+          placeholder='Search for location'
           value={searchValue}
           debounceTimeout={800}
           onChange={(ev: ChangeEvent): void => handleSearchChange(ev)}
@@ -180,25 +181,34 @@ const Search: FC<{ size: IReactSizeMe }> = (props): JSX.Element => {
             ev: React.KeyboardEvent<HTMLInputElement>
           ): Promise<void> => handleKeyDown(ev)}
         />
+
         <LocationIconSvg
           onClick={handleLocationClick}
+          onKeyPress={(ev) => {
+            if (ev.key === 'Enter') handleLocationClick();
+          }}
+          aria-label='Get current weather'
+          tabIndex={0}
           css={`
             cursor: pointer;
             fill: ${({ theme }: { [key: string]: DefaultTheme }) =>
               theme.colors.secondary};
+            ${acessibilityFocus}
           `}
         />
       </SearchInputWrapper>
       <OptionsContainer
         marginTop={`${props.size.height}px`}
-        data-testid="options-container"
+        data-testid='options-container'
+        aria-label='locations list'
       >
         {locationOptions.map((item: string, index) => {
           // Create a key for items
           const key = `${spaceToDash(item).toLowerCase()}-${index}`;
           return (
             <LocationOption
-              data-testid="options-item"
+              data-testid='options-item'
+              aria-label='location option'
               key={key}
               onClick={() => handleOptionClick(item)}
             >

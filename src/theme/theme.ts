@@ -7,7 +7,7 @@ export const baseTheme: BaseTheme = {
   colors: {
     alerts: {
       success: '#228B22',
-      error: '#B22222',
+      error: '#DC143C',
       warning: '#FF8C00',
     },
   },

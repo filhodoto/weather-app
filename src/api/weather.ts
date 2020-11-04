@@ -1,4 +1,4 @@
-import { spaceToDash } from 'helpers/helpers';
+import { spaceToDash } from 'helpers/generic/generic';
 import {
   IAppState,
   ILocationCoordenates,

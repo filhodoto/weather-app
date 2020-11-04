@@ -1,4 +1,4 @@
-import { arrayNotEmpty, spaceToDash } from 'helpers/helpers';
+import { arrayNotEmpty, spaceToDash } from 'helpers/generic/generic';
 import { IAppState } from 'state/reducers/appReducer';
 
 type LocaleMap = {
