@@ -5,6 +5,7 @@ import React, {
   useReducer,
   createContext,
   Dispatch,
+  useState,
 } from 'react';
 import styled, { ThemeProvider } from 'styled-components';
 import GlobalStyles from 'styles/globalStyles';
@@ -36,18 +37,6 @@ export const StoreContext = createContext<{
   state: IAppState;
   dispatch: Dispatch<any>;
 } | null>(null);
-
-// Update location in store
-export async function updateLocationInStore(dispatch: Dispatch<any>) {
-  const position: ILocationCoordenates = await getCurrentLatLong();
-  setLocation(
-    {
-      lat: position.lat,
-      lon: position.lon,
-    },
-    dispatch
-  );
-}
 
 const AppWrapper = styled.div`
   height: 100%;
@@ -92,11 +81,36 @@ const MainWrapper = styled.main`
   display: grid;
 `;
 
+// Update location in store
+export async function updateLocationInStore(dispatch: Dispatch<any>) {
+  const response: ILocationCoordenates | string = await getCurrentLatLong();
+
+  // If response is an error
+  if (typeof response === 'string') {
+    // Sent the fail message to state
+    fetchWeaterFailed(response, dispatch);
+
+    // Remove Loading
+    setLoading(false, dispatch);
+  } else {
+    // Set location in state
+    setLocation(
+      {
+        lat: response.lat,
+        lon: response.lon,
+      },
+      dispatch
+    );
+  }
+}
+
 const App: FC = (): JSX.Element => {
-  const [state, dispatch] = useReducer<Reducer<IAppState, any>>(
+  const [state, dispatch] = useReducer<Reducer<IAppState, Dispatch<any>>>(
     appReducer,
     appState
   );
+
+  const [fetchedGeoLocation, setfetchedGeoLocation] = useState(false);
 
   // Update weather details in store and remove loading
   const updateWeatherInStore = async () => {
@@ -116,10 +130,13 @@ const App: FC = (): JSX.Element => {
 
   // Update location data when app first renders
   useEffect(() => {
-    if (navigator.geolocation && state.location === '') {
+    if (navigator.geolocation && state.location === '' && !fetchedGeoLocation) {
       updateLocationInStore(dispatch);
+
+      // Prevent infinite loop when geolocation fails and stateLocation doesn't change
+      setfetchedGeoLocation(true);
     }
-  });
+  }, [state.location, fetchedGeoLocation]);
 
   // Update weather in store when location changes
   useEffect(() => {
@@ -130,7 +147,7 @@ const App: FC = (): JSX.Element => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.location]);
 
-  // Update themeProvicer qwhen we change settings theme
+  // Update themeProvicer when we change settings theme
   useEffect(() => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.settings.theme]);
