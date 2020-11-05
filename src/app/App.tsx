@@ -58,7 +58,6 @@ const AppWrapper = styled.div`
 
   color: ${(props) => props.theme.colors.primary};
   background-image: ${(props) => props.theme.colors.bgGradient};
-  font-family: ${(props) => props.theme.fonts.bodyFont}, 'sans-serif';
 
   * {
     box-sizing: border-box;
@@ -146,10 +145,6 @@ const App: FC = (): JSX.Element => {
             content='Weather app to check current weather in any location'
           />
           <html lang={state.settings.lang} />
-          <link
-            href='https://fonts.googleapis.com/css2?family=Abel&family=Nunito:wght@300;400;700&display=swap'
-            rel='stylesheet'
-          ></link>
         </Helmet>
         <StoreContext.Provider value={{ state, dispatch }}>
           <Header />
