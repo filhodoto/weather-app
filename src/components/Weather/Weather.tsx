@@ -49,7 +49,8 @@ const Weather: FC = (): JSX.Element => {
         `}
         aria-label='temperature'
       >
-        {roundTo(temperature, 1)}º
+        {roundTo(temperature, 1)}
+        <WeatherIcon id='celsius' />
       </Heading>
       <Heading
         fontSize={pxToRem(14)}
@@ -58,7 +59,7 @@ const Weather: FC = (): JSX.Element => {
         `}
         aria-label='feels like temperature'
       >
-        Feels like {roundTo(feelsLike, 1)}º
+        Feels like {roundTo(feelsLike, 1)} <WeatherIcon id='celsius' />
       </Heading>
     </Information>
   );

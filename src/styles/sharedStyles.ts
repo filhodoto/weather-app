@@ -1,5 +1,5 @@
 // Create styles that should be imported to other components here
-import { css } from 'styled-components';
+import { css, keyframes } from 'styled-components';
 
 // Our App uses grid to get a full height design (alternative to 100vh) but for this
 // to work in mobile we need these elements to have height: 100%
@@ -26,4 +26,13 @@ export const acessibilityFocus = css`
   &:focus-visible {
     outline: 1px solid goldenrod;
   }
+`;
+
+/* Animations */
+export const expanse = keyframes`
+    to {
+      transform: scale(1.5);
+      opacity: 0;
+    }
+
 `;

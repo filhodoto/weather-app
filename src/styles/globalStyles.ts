@@ -140,7 +140,7 @@ const GlobalStyles = createGlobalStyle`
     font-family: -apple-system, BlinkMacSystemFont, ${(props) =>
       props.theme.fonts.bodyFont}, 'sans-serif';
     -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    -moz-osx-font-smoothing: grayscale;
   }
 
   ${FixForFullHeight}

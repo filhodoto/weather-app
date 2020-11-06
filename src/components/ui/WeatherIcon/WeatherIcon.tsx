@@ -9,7 +9,7 @@ import { IWeatherState } from 'state/reducers/appReducer';
 const WeatherIcon: FC<{
   className?: string;
   id: IWeatherState['id'] | string;
-  size: string;
+  size?: string;
   padding?: string;
 }> = ({ id, size, padding, className }): JSX.Element => {
   // define className depeding if we're using the icon with the openWeather codes or
