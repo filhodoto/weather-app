@@ -1,4 +1,4 @@
-import { getCurrentYear } from 'helpers/generic/generic';
+import { getCurrentYear, pxToRem } from 'helpers/generic/generic';
 import React from 'react';
 import styled from 'styled-components/macro';
 
@@ -7,7 +7,7 @@ const FooterStyled = styled.footer`
   align-items: center;
   justify-content: center;
   font-size: small;
-  height: 50px;
+  height: ${pxToRem(50)};
 `;
 
 const Footer = (): JSX.Element => {

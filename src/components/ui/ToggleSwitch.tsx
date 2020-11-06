@@ -5,18 +5,19 @@ import { setTheme } from 'state/actions/appActions';
 import { ISettings } from 'state/reducers/appReducer';
 import WeatherIcon from './WeatherIcon/WeatherIcon';
 import { acessibilityFocus } from 'styles/sharedStyles';
+import { pxToRem } from 'helpers/generic/generic';
 
 export const Toggle = styled.div<{ styling: ISettings['theme'] }>`
-  --circleSize: 20px;
-  --circleMargin: 0.2rem;
+  --circleSize: ${pxToRem(20)};
+  --circleMargin: ${pxToRem(3)};
   display: flex;
   align-items: center;
 
   button {
     display: flex;
     align-items: center;
-    width: 3.5rem;
-    height: 1.8rem;
+    width: ${pxToRem(55)};
+    height: ${pxToRem(28)};
     padding: 0;
     background: ${(props) => props.theme.colors.secondary};
     border-radius: 1rem;
@@ -36,6 +37,9 @@ export const Toggle = styled.div<{ styling: ISettings['theme'] }>`
     background: ${(props) => props.theme.colors.primary};
     transform: translateX(0);
     transition: 0.4s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   // Dark Mode
@@ -48,6 +52,11 @@ export const Toggle = styled.div<{ styling: ISettings['theme'] }>`
         );
       }
     `}
+`;
+
+// Note:: When using a component with "styled(component)" we need to let the styled component use a className
+export const ToggleIcon = styled(WeatherIcon)`
+  color: ${(props) => props.theme.colors.secondary};
 `;
 
 // Note:: When using a component with "styled(component)" we need to let the styled component use a className
@@ -78,18 +87,15 @@ const ToggleSwitch: FC<{ className?: string }> = ({ className }) => {
 
   return (
     <Toggle styling={state.settings.theme} className={className}>
-      <WeatherIcon
-        id={icons[state.settings.theme]}
-        size={'1rem'}
-        padding={'0 0.6rem 0 0'}
-      />
       <button
         onClick={handleToggleClick}
         onKeyPress={handleKeyPress}
         aria-label='switch theme'
         tabIndex={0}
       >
-        <span></span>
+        <span>
+          <ToggleIcon id={icons[state.settings.theme]} size={pxToRem(14)} />
+        </span>
       </button>
     </Toggle>
   );

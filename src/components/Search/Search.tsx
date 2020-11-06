@@ -8,12 +8,12 @@ import sizeMe from 'react-sizeme';
 
 // Import svg elements in a basic way from an image file
 import { ReactComponent as LocationIconSvg } from 'assets/icons/location-icon.svg';
-import { spaceToDash } from 'helpers/generic/generic';
+import { pxToRem, spaceToDash } from 'helpers/generic/generic';
 import { device } from 'styles/MediaQueries';
 import { acessibilityFocus } from 'styles/sharedStyles';
 
-const InputPadding: string = '0.6rem 1rem';
-const InputBorderRadius: string = '5px;';
+const InputPadding: string = `${pxToRem(9.5)} ${pxToRem(16)}`;
+const InputBorderRadius: string = `${pxToRem(5)}`;
 
 const SearchWrapper = styled.div`
   display: flex;
@@ -26,7 +26,7 @@ const SearchWrapper = styled.div`
   // Wrapping full line ${``} beacuse of this TS issue:
   // https://github.com/microsoft/typescript-styled-plugin/issues/110
   ${`@media screen and ${device.min.mobile}`} {
-    min-width: 220px;
+    min-width: ${pxToRem(220)};
     width: auto;
   }
 
@@ -53,7 +53,7 @@ const SearchInputWrapper = styled.div<{ open: boolean }>`
 
 const Input = styled(DebounceInput)<DebounceInputProps<{}, {}>>`
   flex: 1;
-  padding-right: 10px;
+  padding-right: ${pxToRem(10)};
   border: none;
   background: none;
   font-family: ${(props) => props.theme.fonts.bodyFont};
@@ -198,7 +198,7 @@ const Search: FC<{ size: IReactSizeMe }> = (props): JSX.Element => {
         />
       </SearchInputWrapper>
       <OptionsContainer
-        marginTop={`${props.size.height}px`}
+        marginTop={`${pxToRem(props.size.height)}`}
         data-testid='options-container'
         aria-label='locations list'
       >

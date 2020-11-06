@@ -1,4 +1,4 @@
-import { arrayNotEmpty, getCurrentYear, spaceToDash } from './generic';
+import { arrayNotEmpty, getCurrentYear, pxToRem, spaceToDash } from './generic';
 
 it('Should return current year', () => {
   expect(getCurrentYear(new Date(2018, 11))).toBe(2018);
@@ -12,4 +12,8 @@ it('Should turn string spaces into dash', () => {
 it('Should tell if array is empty', () => {
   expect(arrayNotEmpty(['ddd', 2])).toBeTruthy();
   expect(arrayNotEmpty([])).toBeFalsy();
+});
+
+it('Should convert px to rem', () => {
+  expect(pxToRem(10)).toBe('0.625rem');
 });

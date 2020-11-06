@@ -2,11 +2,11 @@ import React, { FC, useContext } from 'react';
 import styled from 'styled-components/macro';
 import { StoreContext } from 'app/App';
 import WeatherIcon from 'components/ui/WeatherIcon/WeatherIcon';
-import { roundTo } from 'helpers/generic/generic';
+import { pxToRem, roundTo } from 'helpers/generic/generic';
 
 const Information = styled.div`
   & > * {
-    padding: 2.5px 0;
+    padding: ${pxToRem(2.5)} 0;
   }
 `;
 
@@ -32,27 +32,27 @@ const Weather: FC = (): JSX.Element => {
       <p className='information__timezone' aria-label='timezone'>
         {timezone}
       </p>
-      <Heading fontSize={'1.5rem'} aria-label='location'>
+      <Heading fontSize={pxToRem(24)} aria-label='location'>
         {place}
       </Heading>
       <WeatherIcon
         id={id}
-        size='7rem'
-        padding='15px 0 25px'
+        size={pxToRem(115)}
+        padding={`${pxToRem(15)} 0 ${pxToRem(25)}`}
         aria-label='weather icon'
       />
       <p className='information__feedback'>{feedback}</p>
       <Heading
-        fontSize={'2rem'}
+        fontSize={pxToRem(32)}
         css={`
-          margin-top: 15px;
+          margin-top: ${pxToRem(15)};
         `}
         aria-label='temperature'
       >
         {roundTo(temperature, 1)}º
       </Heading>
       <Heading
-        fontSize={'0.9rem'}
+        fontSize={pxToRem(14)}
         css={`
           font-weight: 400;
         `}

@@ -31,6 +31,7 @@ import {
 import Loading from 'components/ui/Loading/Loading';
 import FeedbackMsg from 'components/ui/FeedbackMsg/FeedbackMsg';
 import { device } from 'styles/MediaQueries';
+import { pxToRem } from 'helpers/generic/generic';
 
 // Define store context
 export const StoreContext = createContext<{
@@ -54,12 +55,12 @@ const AppWrapper = styled.div`
 
   & > * {
     width: 100%;
-    padding: 20px;
+    padding: ${pxToRem(20)};
 
     // Wrapping full line ${``} beacuse of this TS issue:
     // https://github.com/microsoft/typescript-styled-plugin/issues/110
     ${`@media screen and ${device.min.tablet}`} {
-      padding: 10px;
+      padding: ${pxToRem(20)};
     }
   }
 

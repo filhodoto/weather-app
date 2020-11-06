@@ -3,12 +3,13 @@ import styled from 'styled-components/macro';
 import Search from 'components/Search/Search';
 import ToggleSwitch from 'components/ui/ToggleSwitch';
 import { device } from 'styles/MediaQueries';
+import { pxToRem } from 'helpers/generic/generic';
 
 const HeaderStyled = styled.header`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  min-height: 60px;
+  min-height: ${pxToRem(60)};
   flex-flow: column;
 
   // Wrapping full line ${``} beacuse of this TS issue:
@@ -24,14 +25,14 @@ const LeftSection = styled.section`
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  margin-bottom: 20px;
+  margin-bottom: ${pxToRem(20)};
 
   // Wrapping full line ${``} beacuse of this TS issue:
   // https://github.com/microsoft/typescript-styled-plugin/issues/110
   ${`@media screen and ${device.min.mobile}`} {
     width: auto;
     margin-bottom: 0;
-    min-width: 220px;
+    min-width: ${pxToRem(220)};
   }
 `;
 
@@ -41,7 +42,7 @@ const Logo = styled.h1`
 
 const ThemeSwitch = styled(ToggleSwitch)`
   ${`@media ${device.min.mobile} and ${device.max.tablet} `} {
-    margin-top: 40px;
+    margin-top: ${pxToRem(40)};
     position: absolute;
     top: 0;
   }
