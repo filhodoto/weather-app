@@ -38,7 +38,7 @@ const Weather: FC = (): JSX.Element => {
       <WeatherIcon
         id={id}
         size='7rem'
-        padding='15px 0'
+        padding='15px 0 25px'
         aria-label='weather icon'
       />
       <p className='information__feedback'>{feedback}</p>

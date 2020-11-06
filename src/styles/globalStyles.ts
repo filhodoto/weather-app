@@ -2,6 +2,7 @@ import { createGlobalStyle } from 'styled-components';
 import { FixForFullHeight } from './sharedStyles';
 
 const GlobalStyles = createGlobalStyle`
+
   html,
   body,
   div,
@@ -134,6 +135,14 @@ const GlobalStyles = createGlobalStyle`
     border-collapse: collapse;
     border-spacing: 0;
   }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, ${(props) =>
+      props.theme.fonts.bodyFont}, 'sans-serif';
+    -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  }
+
   ${FixForFullHeight}
 `;
 

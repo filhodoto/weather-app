@@ -5,7 +5,7 @@ import styled from 'styled-components/macro';
 type MessageInterface = 'error' | 'warning' | 'success';
 
 const StyledMsg = styled.p<{ type: MessageInterface }>`
-  color: ${(props) => props.theme.colors.alerts[`${props.type}`]};
+  color: ${(props) => props.theme.colors.primary};
   padding: 10px 15px;
   border-radius: 5px;
   border: 1px solid;
