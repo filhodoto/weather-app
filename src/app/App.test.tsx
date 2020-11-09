@@ -6,9 +6,9 @@ afterEach(cleanup);
 
 describe('Elements are rendered on first load', () => {
   it('Renders logo, loading and footer', () => {
-    const { getByTestId, getByText } = render(renderWithContextAndTheme(App));
+    const { getByTestId } = render(renderWithContextAndTheme(App));
     expect(getByTestId(/logo/i)).toBeInTheDocument();
-    expect(getByTestId('footer')).toBeInTheDocument();
-    expect(getByText(/Loading.../i)).toBeInTheDocument();
+    expect(getByTestId(/footer/i)).toBeInTheDocument();
+    expect(getByTestId(/loader/i)).toBeInTheDocument();
   });
 });

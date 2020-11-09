@@ -30,7 +30,7 @@ export const Loader = styled.span`
 
 const Loading: FC = () => {
   return (
-    <Container>
+    <Container data-testid='loader'>
       <Text>Searching</Text>
       <Loader />
     </Container>

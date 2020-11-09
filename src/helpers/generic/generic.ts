@@ -3,6 +3,9 @@ export const getCurrentYear = (date = new Date()): number => date.getFullYear();
 export const spaceToDash = (string: string): string =>
   string.replace(/\s+/g, '-');
 
+export const charactersToSpace = (string: string): string =>
+  string.replace(/[^a-zA-Z ]/g, ' ');
+
 export const arrayNotEmpty = (arr: any[]): boolean =>
   typeof arr != 'undefined' && arr != null && arr.length > 0;
 

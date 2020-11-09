@@ -1,5 +1,6 @@
 // Create styles that should be imported to other components here
 import { css, keyframes } from 'styled-components';
+import { pxToRem } from 'helpers/generic/generic';
 
 // Our App uses grid to get a full height design (alternative to 100vh) but for this
 // to work in mobile we need these elements to have height: 100%
@@ -34,5 +35,48 @@ export const expanse = keyframes`
       transform: scale(1.5);
       opacity: 0;
     }
-
 `;
+
+export const float = keyframes`
+	0% {
+		transform: translatey(0px);
+	}
+	50% {
+		transform: translatey(${pxToRem(-8)});
+	}
+	100% {
+		transform: translatey(0px);
+	}
+}`;
+
+export const scaleFadeOut = keyframes`
+	0% {
+    transform: scale(1);
+    opacity: 1;
+	}
+	100% {
+    transform: scale(0.8);
+    opacity: 0;
+
+	}
+}`;
+
+export const scaleFadeIn = keyframes`
+	0% {
+    transform: scale(0.8);
+    opacity: 0;
+	}
+	100% {
+    transform: scale(1);
+    opacity: 1;
+	}
+}`;
+
+export const fadeIn = keyframes`
+	0% {
+    opacity: 0;
+	}
+	100% {
+    opacity: 1;
+	}
+}`;
