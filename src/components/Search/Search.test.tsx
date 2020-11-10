@@ -1,6 +1,6 @@
 import { render, cleanup, screen, act } from '@testing-library/react';
 import { fetchCities } from 'api/cities';
-import { renderWithContextAndTheme } from 'helpers/jest-testing';
+import { renderWithContextAndTheme } from 'helpers/components/renderWithContextAndTheme';
 import userEvent from '@testing-library/user-event';
 import Search from './Search';
 

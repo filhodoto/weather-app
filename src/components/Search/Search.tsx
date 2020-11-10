@@ -11,6 +11,7 @@ import { ReactComponent as LocationIconSvg } from 'assets/icons/location-icon.sv
 import { pxToRem, spaceToDash } from 'helpers/generic/generic';
 import { device } from 'styles/MediaQueries';
 import { acessibilityFocus } from 'styles/sharedStyles';
+import useOnclickOutside from 'react-cool-onclickoutside';
 
 const InputPadding: string = `${pxToRem(9.5)} ${pxToRem(16)}`;
 const InputBorderRadius: string = `${pxToRem(5)}`;
@@ -110,6 +111,15 @@ const Search: FC<{ size: IReactSizeMe }> = (props): JSX.Element => {
   const [searchValue, setSearchValue] = useState<string>('');
   const [locationOptions, setlocationOptions] = useState<string[]>([]);
 
+  // Reference to add an action when we click outisde the element with this reference
+  const clickOustideRef = useOnclickOutside(() => {
+    // If location list is open, clean list (which will remove it)
+    if (locationOptions.length > 0) {
+      // Clean options
+      setlocationOptions([]);
+    }
+  });
+
   const populateLocationOptions = async (searchQuery: string) => {
     // Get cities from API
     const options: string[] = await fetchCities(
@@ -201,6 +211,7 @@ const Search: FC<{ size: IReactSizeMe }> = (props): JSX.Element => {
         marginTop={`${pxToRem(props.size.height)}`}
         data-testid='options-container'
         aria-label='locations list'
+        ref={clickOustideRef}
       >
         {locationOptions.map((item: string, index) => {
           // Create a key for items

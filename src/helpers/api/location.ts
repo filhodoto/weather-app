@@ -2,11 +2,8 @@ import { ILocationCoordenates } from 'state/reducers/appReducer';
 
 // Handle Error response from navigator.geolocation
 const handleError = (error: PositionError): string => {
-  const errorMsg: string =
-    error.message !== ''
-      ? error.message
-      : 'Unfortunately we were unable to get your current location';
-  return errorMsg;
+  console.warn(error.message);
+  return 'Unfortunately we were unable to get your current location';
 };
 
 // Get Geo Position with a promise so we can wait for it's resolve
