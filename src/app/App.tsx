@@ -21,7 +21,7 @@ import {
   ILocationCoordenates,
 } from 'state/reducers/appReducer';
 import { fetchWeather } from 'api/weather';
-import { getCurrentLatLong } from 'helpers/location';
+import { getCurrentLatLong } from 'helpers/api/location';
 import {
   fetchWeaterSucess,
   fetchWeaterFailed,

@@ -1,6 +1,6 @@
 import { render, cleanup } from '@testing-library/react';
 import App from './App';
-import { renderWithContextAndTheme } from 'helpers/jest-testing';
+import { renderWithContextAndTheme } from 'helpers/components/renderWithContextAndTheme';
 
 afterEach(cleanup);
 
