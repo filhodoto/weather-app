@@ -1,26 +1,31 @@
 # Weather App
 
-Simple weather app using React, Typescript and [Open Weather API](https://openweathermap.org/)<br />
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+## About
 
-In the project directory, you can run:
+This project was bootstrapped with [create react app](https://github.com/facebook/create-react-app).<br/>
+This weather app allows you to check the current weather on your location or any other city in the world. It is a personal project created so that I could investigate and practice with a new development stack. 
 
-### `yarn start`
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Built with
 
-### `yarn build`
+- React
+- Typescript
+- ES6
+- Styled-components
+- Jest
+- React Testing Library
+- Husky
+- VSCode
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## APIs
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+- [Open Weather](https://api.ipify.org/?format=json)
+- [Algolia](https://api.ipify.org/?format=json)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Assets
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+- [Weather Icons](https://erikflowers.github.io/weather-icons/)
+- [React Debounce Input](https://github.com/nkbt/react-debounce-input)
+- [React Cool Onclickoutside](https://github.com/wellyshen/react-cool-onclickoutside)
+
