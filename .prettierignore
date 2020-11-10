@@ -1,0 +1,18 @@
+# dependencies
+/node_modules
+/.pnp
+.pnp.js
+
+# dev
+/.history
+/.vscode
+
+# testing
+/coverage
+
+# production
+/build
+
+# Ignore all HTML and min.css files:
+*.html
+*.min.css
