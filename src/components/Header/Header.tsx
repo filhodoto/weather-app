@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components/macro';
 import Search from 'components/Search/Search';
-import ToggleSwitch from 'components/ui/ToggleSwitch';
+import ToggleSwitch from 'components/ui/ToggleSwitch/ToggleSwitch';
 import { device } from 'styles/MediaQueries';
 import { pxToRem } from 'helpers/generic/generic';
 

@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components/macro';
 import { StoreContext } from 'app/App';
 import { setTheme } from 'state/actions/appActions';
 import { ISettings } from 'state/reducers/appReducer';
-import WeatherIcon from './WeatherIcon/WeatherIcon';
+import WeatherIcon from '../WeatherIcon/WeatherIcon';
 import { acessibilityFocus } from 'styles/sharedStyles';
 import { pxToRem } from 'helpers/generic/generic';
 

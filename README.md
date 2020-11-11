@@ -1,11 +1,16 @@
 # Weather App
 
+This project was bootstrapped with [create react app](https://github.com/facebook/create-react-app).<br/>
+
+<br/>
+
+![app-snapshot](src/assets/images/snapshot.jpg)
+
+<br/>
 
 ## About
 
-This project was bootstrapped with [create react app](https://github.com/facebook/create-react-app).<br/>
-This weather app allows you to check the current weather on your location or any other city in the world. It is a personal project created so that I could investigate and practice with a new development stack. 
-
+This weather app allows you to check the current weather on your location or any other city in the world. It is a personal project created so that I could investigate and practice with a new development stack.
 
 ## Built with
 
@@ -18,6 +23,11 @@ This weather app allows you to check the current weather on your location or any
 - Husky
 - VSCode
 
+## Features
+
+- Accessibility
+- Responsive
+
 ## APIs
 
 - [Open Weather](https://api.ipify.org/?format=json)
@@ -28,4 +38,3 @@ This weather app allows you to check the current weather on your location or any
 - [Weather Icons](https://erikflowers.github.io/weather-icons/)
 - [React Debounce Input](https://github.com/nkbt/react-debounce-input)
 - [React Cool Onclickoutside](https://github.com/wellyshen/react-cool-onclickoutside)
-
